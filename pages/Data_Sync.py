@@ -181,6 +181,7 @@ with st.container(border=True) :
         db_sales_final['seller_id']=db_sales_final['seller_id'].astype(str)
         final_bar.progress(2/4,text="Final Magic ")
 
+        db_data.drop(['order_status'],axis=1,inplace=True)
         conn.update(worksheet="final_data",data=db_data)
         conn.update(worksheet="final_sales",data=db_sales_final)
         
