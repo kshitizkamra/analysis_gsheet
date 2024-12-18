@@ -183,7 +183,7 @@ with st.container(border=True) :
         
         # db_data.drop(['order_status','fabric'],axis=1,inplace=True)
         # db_sales_final.drop(['fabric'],axis=1,inplace=True)
-
+        db_sales_final.drop(['channel_y'],axis=1,inplace=True)
         conn.update(worksheet="final_data",data=db_data)
         conn.update(worksheet="final_sales",data=db_sales_final)
         
