@@ -176,7 +176,7 @@ with tab1:
                 
         
         
-        group_by_list = ['channel','seller_id','state','brand','gender','article type','month','vendor_style_code','size','fabric','collection','mrp','cost','color']
+        group_by_list = ['channel','seller_id','state','brand','gender','article type','month','vendor_style_code','size','collection','mrp','cost','color']
         
         group_by = st.multiselect(
     "Group By",
