@@ -179,6 +179,13 @@ with st.container(border=True) :
         db_data.drop(['order_status'],axis=1,inplace=True)
         # db_sales_final.drop(['fabric'],axis=1,inplace=True)
         db_sales_final.drop(['channel_y'],axis=1,inplace=True)
+
+        abcd=db_data[(db_data['order_type']=='Reverse') & (db_data['returns']==0)]
+        db_data.loc[(db_data['order_release_id'].isin(abcd['order_release_id'])),'returns']=1
+        db_sales_final.loc[(db_sales_final['order_release_id'].isin(abcd['order_release_id'])),'returns']=1
+        
+
+
         final_data_conn.update(worksheet="final_data",data=db_data)
         final_data_conn.update(worksheet="final_sales",data=db_sales_final)
         
