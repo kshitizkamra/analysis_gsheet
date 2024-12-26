@@ -207,9 +207,9 @@ db_style_code['settlement']=db_style_code['customer_paid_amt']-db_style_code['pl
 db_style_code.sort_values(by=['order_created_date'],inplace=True)
 
 db_style_code.fillna(0,inplace=True)
-db_style_code=db_style_code.groupby(['state','order_type','channel','vendor_style_code','order_created_date','brand','gender','article_type','image_link','color','collection','month','size'], as_index=False,sort=False).agg({'returns':'sum','customer_paid_amt':'sum','order_count':'sum','settlement':'sum','return_count':'sum','cost':'sum'})
+db_style_code=db_style_code.groupby(['state','order_type','channel','vendor_style_code','order_created_date','brand','gender','article_type','image_link','color','collection','month','size'], as_index=False,sort=False).agg({'returns':'sum','customer_paid_amt':'sum','order_count':'sum','settlement':'sum','return_count':'sum','cost':'sum','total_actual_settlement':'sum'})
 
-db_style_code['p/l']=db_style_code['settlement']-db_style_code['cost']
+db_style_code['p/l']=db_style_code['total_actual_settlement']-db_style_code['cost']
 db_style_code=db_style_code.merge(db_latlong,left_on='state',right_on='state')
 # db_style_code['order_count']=db_style_code['vendor_style_code'].map(db_data_forward['vendor_style_code'].value_counts())
 db_style_code_for_sequence=db_style_code.groupby(['vendor_style_code'],as_index=False,sort=False).agg({'order_count':'sum'})
@@ -348,12 +348,12 @@ with st.container(border=True) :
                         count=count+1
 
                 with tab2:
-                    db_style_code_display_tab=db_style_code_display.groupby(['month'], as_index=False,sort=False).agg({'customer_paid_amt':'sum','settlement':'sum','cost':'sum','p/l':'sum'})
+                    db_style_code_display_tab=db_style_code_display.groupby(['month'], as_index=False,sort=False).agg({'customer_paid_amt':'sum','total_actual_settlement':'sum','cost':'sum','p/l':'sum'})
                     
                     fig = px.line(height=320)
                     
                     fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['customer_paid_amt'],name="Net Sales")
-                    fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['settlement'],name="Settlement Amount")
+                    fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['total_actual_settlement'],name="Settlement Amount")
                     fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['cost'],name="COGS")
                     fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['p/l'],name="P/L")
                     with st.container(height=355):
@@ -469,7 +469,7 @@ with st.container(border=True):
                 
                 db_style_code_actions_tab
                 db_style_code_display_unit
-
+                
                 with st.container(border=True):
                     subcolm1,subcolm2,subcol3=st.columns([1,3,1])    
                     with subcolm1:
@@ -572,12 +572,17 @@ with st.container(border=True):
         
     db_style_code_funnel_final=db_style_code_funnel[db_style_code_funnel['vendor_style_code']==db_style_code_for_sequence.loc[st.session_state['page_number'],'vendor_style_code']]
     db_style_code_funnel_final.reset_index(inplace=True)
+    
     # db_style_code_funnel_final
     db_style_code_funnel_final['taxes']=db_style_code_funnel_final['tcs_amount']+db_style_code_funnel_final['tds_amount']
     db_style_code_funnel_final['settlement']=db_style_code_funnel_final['customer_paid_amt']-db_style_code_funnel_final['platform_fees']-db_style_code_funnel_final['taxes']-db_style_code_funnel_final['total_logistics']
-    db_style_code_funnel_final=db_style_code_funnel_final.groupby(['channel'],as_index=False).agg({'customer_paid_amt':'sum','platform_fees':'sum','taxes':'sum','total_logistics':'sum','settlement':'sum','cost':'sum'})
-    db_style_code_funnel_final['p/l']=db_style_code_funnel_final['settlement']-db_style_code_funnel_final['cost']
-
+    # db_style_code_funnel_final
+    # db_style_code_funnel_final['settlement']=db_style_code_funnel_final['total_actual_settlement']
+    # db_style_code_funnel_final
+    db_style_code_funnel_final=db_style_code_funnel_final.groupby(['channel'],as_index=False).agg({'customer_paid_amt':'sum','platform_fees':'sum','taxes':'sum','total_logistics':'sum','settlement':'sum','cost':'sum','total_actual_settlement':'sum'})
+    db_style_code_funnel_final['p/l']=db_style_code_funnel_final['total_actual_settlement']-db_style_code_funnel_final['cost']
+    db_style_code_funnel_final['mktg & others']=db_style_code_funnel_final['settlement']-db_style_code_funnel_final['total_actual_settlement']
+    # db_style_code_funnel_final
 
 
     funnel_channel_list=db_style_code_funnel_final['channel'].unique().tolist()
@@ -594,14 +599,14 @@ with st.container(border=True):
         db_style_code_funnel_final_funnel=pd.concat([db_style_code_funnel_final_funnel, db_style_code_funnel_final_1_T], ignore_index=True, sort=False)
 
     db_style_code_funnel_final_funnel['value']=round(db_style_code_funnel_final_funnel['value'],0)
-   
+    # db_style_code_funnel_final_funnel
 
     
     fig = go.Figure(go.Waterfall(
-    name = "CODB", orientation = "h", measure = ["relative", "relative", "relative", "relative", "total", "relative",
+    name = "CODB", orientation = "h", measure = ["relative", "relative", "relative", "relative", "relative","total", "relative",
                                               "total"],
-    y = ["Customer_Paid_Amount", "Platform Fee", "Taxes", "Logistics", "Settlement", "COGS", "P/L"],
-    x = [db_style_code_funnel_final_funnel['value'][0],-db_style_code_funnel_final_funnel['value'][1],-db_style_code_funnel_final_funnel['value'][2],-db_style_code_funnel_final_funnel['value'][3],None,-db_style_code_funnel_final_funnel['value'][5],-db_style_code_funnel_final_funnel['value'][6], None],
+    y = ["Customer_Paid_Amount", "Platform Fee", "Taxes", "Logistics","Marketing & Others", "Settlement", "COGS", "P/L"],
+    x = [db_style_code_funnel_final_funnel['value'][0],-db_style_code_funnel_final_funnel['value'][1],-db_style_code_funnel_final_funnel['value'][2],-db_style_code_funnel_final_funnel['value'][3],-db_style_code_funnel_final_funnel['value'][8],None,-db_style_code_funnel_final_funnel['value'][5], None],
     connector = {"mode":"between", "line":{"width":4, "color":"rgb(0, 0, 0)", "dash":"solid"}}
 ))
 
@@ -609,21 +614,27 @@ with st.container(border=True):
 
     st.plotly_chart(fig,key=count)
     count=count+1
+
 
 
 with st.container(border=True):
-    st.header ("Unit Economics")
+    st.header ("CODB")
         
     db_style_code_funnel_final=db_style_code_funnel[db_style_code_funnel['vendor_style_code']==db_style_code_for_sequence.loc[st.session_state['page_number'],'vendor_style_code']]
     db_style_code_funnel_final.reset_index(inplace=True)
-    db_style_code_funnel_final['net_order']=db_style_code_funnel_final['order_count']-db_style_code_funnel_final['return_count']
+    
+    # db_style_code_funnel_final
     db_style_code_funnel_final['taxes']=db_style_code_funnel_final['tcs_amount']+db_style_code_funnel_final['tds_amount']
     db_style_code_funnel_final['settlement']=db_style_code_funnel_final['customer_paid_amt']-db_style_code_funnel_final['platform_fees']-db_style_code_funnel_final['taxes']-db_style_code_funnel_final['total_logistics']
-    db_style_code_funnel_final=db_style_code_funnel_final.groupby(['channel'],as_index=False).agg({'customer_paid_amt':'sum','platform_fees':'sum','taxes':'sum','total_logistics':'sum','settlement':'sum','cost':'sum','net_order':'sum'})
-    db_style_code_funnel_final['p/l']=db_style_code_funnel_final['settlement']-db_style_code_funnel_final['cost']
+    db_style_code_funnel_final['net_order']=db_style_code_funnel_final['order_count']-db_style_code_funnel_final['return_count']
+    # db_style_code_funnel_final['settlement']=db_style_code_funnel_final['total_actual_settlement']
+    # db_style_code_funnel_final
+    db_style_code_funnel_final=db_style_code_funnel_final.groupby(['channel'],as_index=False).agg({'customer_paid_amt':'sum','platform_fees':'sum','taxes':'sum','total_logistics':'sum','settlement':'sum','cost':'sum','total_actual_settlement':'sum','net_order':'sum'})
+    db_style_code_funnel_final['p/l']=db_style_code_funnel_final['total_actual_settlement']-db_style_code_funnel_final['cost']
+    db_style_code_funnel_final['mktg & others']=db_style_code_funnel_final['settlement']-db_style_code_funnel_final['total_actual_settlement']
+    # db_style_code_funnel_final
+
     
-
-
     funnel_channel_list=db_style_code_funnel_final['channel'].unique().tolist()
     funnel_channel_len=len(funnel_channel_list)
     db_style_code_funnel_final_funnel=pd.DataFrame()
@@ -638,16 +649,17 @@ with st.container(border=True):
         db_style_code_funnel_final_funnel=pd.concat([db_style_code_funnel_final_funnel, db_style_code_funnel_final_1_T], ignore_index=True, sort=False)
 
     db_style_code_funnel_final_funnel['value']=round(db_style_code_funnel_final_funnel['value'],0)
-   
+    
     
     db_style_code_funnel_final_funnel_unit=db_style_code_funnel_final_funnel
-    db_style_code_funnel_final_funnel_unit['value_unit']=db_style_code_funnel_final_funnel_unit['value']/db_style_code_funnel_final_funnel_unit['value'][6]
+    # db_style_code_funnel_final_funnel_unit
+    db_style_code_funnel_final_funnel_unit['value_unit']=db_style_code_funnel_final_funnel_unit['value']/db_style_code_funnel_final_funnel_unit['value'][7]
     # db_style_code_funnel_final_funnel_unit
     fig = go.Figure(go.Waterfall(
-    name = "CODB", orientation = "h", measure = ["relative", "relative", "relative", "relative", "total", "relative",
+    name = "CODB", orientation = "h", measure = ["relative", "relative", "relative", "relative", "relative","total", "relative",
                                               "total"],
-    y = ["Customer_Paid_Amount", "Platform Fee", "Taxes", "Logistics", "Settlement", "COGS", "P/L"],
-    x = [db_style_code_funnel_final_funnel_unit['value_unit'][0],-db_style_code_funnel_final_funnel_unit['value_unit'][1],-db_style_code_funnel_final_funnel_unit['value_unit'][2],-db_style_code_funnel_final_funnel_unit['value_unit'][3],None,-db_style_code_funnel_final_funnel_unit['value_unit'][5],-db_style_code_funnel_final_funnel_unit['value_unit'][6], None],
+    y = ["Customer_Paid_Amount", "Platform Fee", "Taxes", "Logistics","Marketing & Others", "Settlement", "COGS", "P/L"],
+    x = [db_style_code_funnel_final_funnel_unit['value_unit'][0],-db_style_code_funnel_final_funnel_unit['value_unit'][1],-db_style_code_funnel_final_funnel_unit['value_unit'][2],-db_style_code_funnel_final_funnel_unit['value_unit'][3],-db_style_code_funnel_final_funnel_unit['value_unit'][9],None,-db_style_code_funnel_final_funnel_unit['value_unit'][5], None],
     connector = {"mode":"between", "line":{"width":4, "color":"rgb(0, 0, 0)", "dash":"solid"}}
 ))
 
@@ -655,3 +667,4 @@ with st.container(border=True):
 
     st.plotly_chart(fig,key=count)
     count=count+1
+
