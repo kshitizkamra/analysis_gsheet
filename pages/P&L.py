@@ -159,11 +159,13 @@ try:
 
 except:
         db_data=db_data
-        db_sales_data=db_sales_data        
+        db_sales_data=db_sales_data  
+              
 st.title ("P&L Overview")
         
 db_data_final=db_data
 db_sales_data_final=db_sales_data
+
 
 
 total_channel=db_sales_data['channel_x'].unique().tolist()
@@ -229,18 +231,24 @@ for i in range(tab_len):
         pick_pack_return=db_data_pnl.loc[db_data_pnl['returns']==1,'pick_and_pack_fee'].sum()
         payment_gateway_net_sales=db_data_pnl.loc[db_data_pnl['returns']==0,'payment_gateway_fee'].sum()
         payment_gateway_return=db_data_pnl.loc[db_data_pnl['returns']==1,'payment_gateway_fee'].sum()
+        settlement_net_sales=db_data_pnl.loc[db_data_pnl['returns']==0,'total_actual_settlement'].sum()
+        
+        payment_gateway_return=db_data_pnl.loc[db_data_pnl['returns']==1,'payment_gateway_fee'].sum()
         fixed_fee_net_sales=db_data_pnl.loc[db_data_pnl['returns']==0,'fixed_fee'].sum()
         fixed_fee_return=db_data_pnl.loc[db_data_pnl['returns']==1,'fixed_fee'].sum()
-        settlement_net_sales=settled_orders_value_net_sales-commission_net_sales-taxes_net_sales-logistics_net_sales-fixed_fee_net_sales-pick_pack_net_sales-payment_gateway_net_sales
+        actual_settlement_net_sales=settled_orders_value_net_sales-commission_net_sales-taxes_net_sales-logistics_net_sales-fixed_fee_net_sales-pick_pack_net_sales-payment_gateway_net_sales
         settlement_return=0-logistics_returns-fixed_fee_return-pick_pack_return-payment_gateway_return
+
+        marketing_net_sales=actual_settlement_net_sales-settlement_net_sales
+        marketing_return=0
         cogs_net_sales=db_data_pnl.loc[db_data_pnl['returns']==0,'cost'].sum()
         cogs_return=0
         pnl_net_sales=settlement_net_sales-cogs_net_sales
         pnl_return=settlement_return
         pnl_total=pnl_net_sales+pnl_return
-        returns_data = [['Order_qty', '{:,}'.format(round(return_order_qty,2))],['Comission', '{:,}'.format(round(commission_returns,2))], ['Taxes', '{:,}'.format(round(taxes_returns,2))], ['Logistics', '{:,}'.format(round(logistics_returns,2))], ['Fixed-Fee', '{:,}'.format(round(fixed_fee_return,2))], ['Pick-Pack Fee', '{:,}'.format(round(pick_pack_return,2))], ['Pay Gate Fee', '{:,}'.format(round(payment_gateway_return,2))], ['Settlement', '{:,}'.format(round(settlement_return,2))], ['COGS', '{:,}'.format(round(cogs_return,2))], ['P/L', '{:,}'.format(round(pnl_return,2))]]
+        returns_data = [['Order_qty', '{:,}'.format(round(return_order_qty,2))],['Comission', '{:,}'.format(round(commission_returns,2))], ['Taxes', '{:,}'.format(round(taxes_returns,2))], ['Logistics', '{:,}'.format(round(logistics_returns,2))], ['Fixed-Fee', '{:,}'.format(round(fixed_fee_return,2))], ['Pick-Pack Fee', '{:,}'.format(round(pick_pack_return,2))], ['Pay Gate Fee', '{:,}'.format(round(payment_gateway_return,2))], ['Mktg & Others', '{:,}'.format(round(marketing_return,2))], ['Settlement', '{:,}'.format(round(settlement_return,2))], ['COGS', '{:,}'.format(round(cogs_return,2))], ['P/L', '{:,}'.format(round(pnl_return,2))]]
         returns_dataframe=pd.DataFrame(returns_data, columns=['Metric', 'Value'])
-        net_sales_data = [['Order_qty', '{:,}'.format(round(net_sales_order_qty,2))],['Comission', '{:,}'.format(round(commission_net_sales,2))], ['Taxes', '{:,}'.format(round(taxes_net_sales,2))], ['Logistics', '{:,}'.format(round(logistics_net_sales,2))], ['Fixed-Fee', '{:,}'.format(round(fixed_fee_net_sales,2))], ['Pick-Pack Fee', '{:,}'.format(round(pick_pack_net_sales,2))], ['Pay Gate Fee', '{:,}'.format(round(payment_gateway_net_sales,2))], ['Settlement', '{:,}'.format(round(settlement_net_sales,2))], ['COGS', '{:,}'.format(round(cogs_net_sales,2))], ['P/L', '{:,}'.format(round(pnl_net_sales,2))]]
+        net_sales_data = [['Order_qty', '{:,}'.format(round(net_sales_order_qty,2))],['Comission', '{:,}'.format(round(commission_net_sales,2))], ['Taxes', '{:,}'.format(round(taxes_net_sales,2))], ['Logistics', '{:,}'.format(round(logistics_net_sales,2))], ['Fixed-Fee', '{:,}'.format(round(fixed_fee_net_sales,2))], ['Pick-Pack Fee', '{:,}'.format(round(pick_pack_net_sales,2))], ['Pay Gate Fee', '{:,}'.format(round(payment_gateway_net_sales,2))], ['Mktg & Others', '{:,}'.format(round(marketing_net_sales,2))], ['Settlement', '{:,}'.format(round(settlement_net_sales,2))], ['COGS', '{:,}'.format(round(cogs_net_sales,2))], ['P/L', '{:,}'.format(round(pnl_net_sales,2))]]
         net_sales_dataframe=pd.DataFrame(net_sales_data, columns=['Metric', 'Value'])
 
 
@@ -260,6 +268,10 @@ for i in range(tab_len):
         estimated_pick_pack_return=pick_pack_return/settled_orders_value_returns*estimated_settled_orders_value_returns
         estimated_payment_gateway_net_sales=payment_gateway_net_sales/settled_orders_value_net_sales*estimated_settled_orders_value_net_sales
         estimated_payment_gateway_return=payment_gateway_return/settled_orders_value_returns*estimated_settled_orders_value_returns
+
+        estimated_mktg_net_sales=marketing_net_sales/settled_orders_value_net_sales*estimated_settled_orders_value_net_sales
+        estimated_mktg_return=marketing_return/settled_orders_value_returns*estimated_settled_orders_value_returns
+
         estimated_fixed_fee_net_sales=fixed_fee_net_sales/settled_orders_value_net_sales*estimated_settled_orders_value_net_sales
         estimated_fixed_fee_return=fixed_fee_return/settled_orders_value_returns*estimated_settled_orders_value_returns
         estimated_settlement_net_sales=settlement_net_sales/settled_orders_value_net_sales*estimated_settled_orders_value_net_sales
@@ -269,9 +281,9 @@ for i in range(tab_len):
         estimated_pnl_net_sales=estimated_settlement_net_sales-estimated_cogs_net_sales
         estimated_pnl_return=estimated_settlement_return
         estimated_pnl_total=estimated_pnl_net_sales+estimated_pnl_return
-        estimated_returns_data = [['Order_qty', '{:,}'.format(estimated_settled_orders_count_returns)],['Comission', '{:,}'.format(round(estimated_commission_returns,2))], ['Taxes', '{:,}'.format(round(estimated_taxes_returns,2))], ['Logistics', '{:,}'.format(round(estimated_logistics_returns,2))], ['Fixed-Fee', '{:,}'.format(round(estimated_fixed_fee_return,2))], ['Pick-Pack Fee', '{:,}'.format(round(estimated_pick_pack_return,2))], ['Pay Gate Fee', '{:,}'.format(round(estimated_payment_gateway_return,2))], ['Settlement', '{:,}'.format(round(estimated_settlement_return,2))], ['COGS', '{:,}'.format(round(estimated_cogs_return,2))], ['P/L', '{:,}'.format(round(estimated_pnl_return,2))]]
+        estimated_returns_data = [['Order_qty', '{:,}'.format(estimated_settled_orders_count_returns)],['Comission', '{:,}'.format(round(estimated_commission_returns,2))], ['Taxes', '{:,}'.format(round(estimated_taxes_returns,2))], ['Logistics', '{:,}'.format(round(estimated_logistics_returns,2))], ['Fixed-Fee', '{:,}'.format(round(estimated_fixed_fee_return,2))], ['Pick-Pack Fee', '{:,}'.format(round(estimated_pick_pack_return,2))], ['Pay Gate Fee', '{:,}'.format(round(estimated_payment_gateway_return,2))], ['Mktg & Others', '{:,}'.format(round(estimated_mktg_return,2))], ['Settlement', '{:,}'.format(round(estimated_settlement_return,2))], ['COGS', '{:,}'.format(round(estimated_cogs_return,2))], ['P/L', '{:,}'.format(round(estimated_pnl_return,2))]]
         estimated_returns_dataframe=pd.DataFrame(estimated_returns_data, columns=['Metric', 'Value'])
-        estimated_net_sales_data = [['Order_qty', '{:,}'.format(estimated_settled_orders_count)],['Comission', '{:,}'.format(round(estimated_commission_net_sales,2))], ['Taxes', '{:,}'.format(round(estimated_taxes_net_sales,2))], ['Logistics', '{:,}'.format(round(estimated_logistics_net_sales,2))], ['Fixed-Fee', '{:,}'.format(round(estimated_fixed_fee_net_sales,2))], ['Pick-Pack Fee', '{:,}'.format(round(estimated_pick_pack_net_sales,2))], ['Pay Gate Fee', '{:,}'.format(round(estimated_payment_gateway_net_sales,2))], ['Settlement', '{:,}'.format(round(estimated_settlement_net_sales,2))], ['COGS', '{:,}'.format(round(estimated_cogs_net_sales,2))], ['P/L', '{:,}'.format(round(estimated_pnl_net_sales,2))]]
+        estimated_net_sales_data = [['Order_qty', '{:,}'.format(estimated_settled_orders_count)],['Comission', '{:,}'.format(round(estimated_commission_net_sales,2))], ['Taxes', '{:,}'.format(round(estimated_taxes_net_sales,2))], ['Logistics', '{:,}'.format(round(estimated_logistics_net_sales,2))], ['Fixed-Fee', '{:,}'.format(round(estimated_fixed_fee_net_sales,2))], ['Pick-Pack Fee', '{:,}'.format(round(estimated_pick_pack_net_sales,2))], ['Pay Gate Fee', '{:,}'.format(round(estimated_payment_gateway_net_sales,2))], ['Mktg & Others', '{:,}'.format(round(estimated_mktg_net_sales,2))], ['Settlement', '{:,}'.format(round(estimated_settlement_net_sales,2))], ['COGS', '{:,}'.format(round(estimated_cogs_net_sales,2))], ['P/L', '{:,}'.format(round(estimated_pnl_net_sales,2))]]
         estimated_net_sales_dataframe=pd.DataFrame(estimated_net_sales_data, columns=['Metric', 'Value'])
 
 
