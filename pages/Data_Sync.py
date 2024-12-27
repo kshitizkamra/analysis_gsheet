@@ -183,7 +183,7 @@ with st.container(border=True) :
         abcd=db_data[(db_data['order_type']=='Reverse') & (db_data['returns']==0)]
         db_data.loc[(db_data['order_release_id'].isin(abcd['order_release_id'])),'returns']=1
         db_sales_final.loc[(db_sales_final['order_release_id'].isin(abcd['order_release_id'])),'returns']=1
-        
+
 
 
         final_data_conn.update(worksheet="final_data",data=db_data)
@@ -204,8 +204,9 @@ with st.container(border=True) :
         # db_style_data_try=db_data.groupby(['vendor_style_code','channel','brand','gender','article_type'],as_index=False).agg({'order_count':'sum','return_count':'sum','platform_fees':'sum','tcs_amount':'sum','tds_amount':'sum','shipping_fee':'sum','pick_and_pack_fee':'sum','fixed_fee':'sum','payment_gateway_fee':'sum','total_tax_on_logistics':'sum','cost':'sum','order_created_date':'min'})
         # db_style_data_try
         db_data['settlement']=db_data['customer_paid_amt']-db_data['platform_fees']-db_data['tcs_amount']-db_data['tds_amount']-db_data['shipping_fee']-db_data['pick_and_pack_fee']-db_data['fixed_fee']-db_data['payment_gateway_fee']-db_data['total_tax_on_logistics']
+        # db_data['settlement']=db_data['total_actual_settlement']
         db_data.sort_values(by=['order_created_date'],inplace=True)
-        db_data['p/l']=db_data['settlement']-db_data['cost']
+        db_data['p/l']=db_data['total_actual_settlement']-db_data['cost']
         # db_data
 
         # db_style_data['order_created_date']).dt.days
