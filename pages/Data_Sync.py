@@ -84,7 +84,7 @@ with st.container(border=True) :
 
         db_settlement=master_conn.read(worksheet="settlement")
         
-        db_settlement=pd.DataFrame()
+        
         if len(db_settlement_upload)>0:
             settlement_bar.progress(1/2, text="Syncing Settlements - Reading Settlement table")
             db_settlement_upload.fillna(0,inplace=True)
