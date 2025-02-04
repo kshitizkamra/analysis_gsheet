@@ -64,7 +64,7 @@ font-size:15px !important;
 db_sales_data_for_side_filter['order_created_date']=pd.to_datetime(db_sales_data_for_side_filter['order_created_date'], dayfirst=True, format='mixed')
 db_data['order_created_date']=pd.to_datetime(db_data['order_created_date'], dayfirst=True, format='mixed')
 db_sales_data['order_created_date']=pd.to_datetime(db_sales_data['order_created_date'], dayfirst=True, format='mixed')
-kk
+
 
 # db_sales_data_for_side_filter['order_created_date']=pd.to_datetime(db_sales_data_for_side_filter['order_created_date'], format='ISO8601')
 with st.sidebar:
