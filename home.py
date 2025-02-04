@@ -5,6 +5,38 @@ from navigation import make_sidebar
 st.set_page_config(layout="wide")
 make_sidebar()
 
+st.markdown("""
+    <style>
+            .block-container {
+                padding-top: 1rem;
+                padding-bottom: 0rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                    line-height: 30%;
+                text-align: center;
+                font-size : 15px;
+                gap: 0rem;
+
+            }
+            .divder{
+                padding-top: 0rem;
+                padding-bottom: 0rem;
+                padding-left: 0rem;
+                padding-right: 0rem;
+        }
+
+            .box-font {
+font-size:14px !important;
+
+}
+
+        .value-font {
+font-size:15px !important;
+
+}
+                </style>
+    """, unsafe_allow_html=True)
+
 st.title("Welcome to 90NorthBrands")
 
 st.write("Please log in to continue ")
