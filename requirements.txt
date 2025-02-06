@@ -8,3 +8,4 @@ datetime
 psycopg2-binary
 matplotlib
 st-gsheets-connection
+streamlit_extras
