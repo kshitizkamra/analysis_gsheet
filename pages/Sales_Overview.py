@@ -263,9 +263,9 @@ for i in range(tab_len):
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
-                        st.image("assets/order_icon.png", width=40)
+                        st.image("assets/order_icon.png", width=80)
                     with col10:
-                        st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
+                        # st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
                         st.markdown('<p class="value-font"><b>Orders</b></p>', unsafe_allow_html=True)
                         st.markdown('<p class="value-font">'+('{:,}'.format(total_orders))+'</p>', unsafe_allow_html=True)
 
@@ -288,7 +288,7 @@ for i in range(tab_len):
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
-                        st.image("assets/cancelled_icon.png", width=30)
+                        st.image("assets/cancelled_icon.png", width=100)
                     with col10:
                         st.markdown('<p class="value-font"><b>Cancelled</b></p>', unsafe_allow_html=True)
                         st.markdown('<p class="value-font">'+('{:,}'.format(cancelled_orders))+'</p>', unsafe_allow_html=True)
