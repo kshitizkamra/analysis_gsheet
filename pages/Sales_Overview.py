@@ -258,7 +258,7 @@ for i in range(tab_len):
             
             """,
     ):
-                    col9,col10=st.columns([1,3],gap="small")
+                    col9,col10=st.columns([2,3],gap="small")
                     with col9 :
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
