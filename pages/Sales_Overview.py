@@ -263,7 +263,7 @@ for i in range(tab_len):
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
-                        st.image("assets/order_icon.png", width=80)
+                        st.image("assets/order_icon.png", width=200)
                     with col10:
                         # st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
                         st.markdown('<p class="value-font"><b>Orders</b></p>', unsafe_allow_html=True)
