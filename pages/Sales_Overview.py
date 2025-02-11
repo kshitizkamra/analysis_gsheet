@@ -258,14 +258,14 @@ for i in range(tab_len):
             
             """,
     ):
-                    col9,col10=st.columns([2,3],gap="small")
+                    col9,col10=st.columns([2,3.5],gap="small")
                     with col9 :
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
                         st.image("assets/order_icon.png")
                     with col10:
-                        # st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
                         st.markdown('<p class="value-font"><b>Orders</b></p>', unsafe_allow_html=True)
                         st.markdown('<p class="value-font">'+('{:,}'.format(total_orders))+'</p>', unsafe_allow_html=True)
 
@@ -283,12 +283,12 @@ for i in range(tab_len):
             
             """,
     ):
-                    col9,col10=st.columns([1,3],gap="small")
+                    col9,col10=st.columns([2,3.5],gap="small")
                     with col9 :
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
-                        st.image("assets/cancelled_icon.png", width=100)
+                        st.image("assets/cancelled_icon.png")
                     with col10:
                         st.markdown('<p class="value-font"><b>Cancelled</b></p>', unsafe_allow_html=True)
                         st.markdown('<p class="value-font">'+('{:,}'.format(cancelled_orders))+'</p>', unsafe_allow_html=True)
@@ -308,12 +308,12 @@ for i in range(tab_len):
             
             """,
     ):
-                    col9,col10=st.columns([1,3],gap="small")
+                    col9,col10=st.columns([2,3.5],gap="small")
                     with col9 :
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
-                        st.image("assets/shipped_icon.png", width=30)
+                        st.image("assets/shipped_icon.png")
                     with col10:
                         st.markdown('<p class="value-font"><b>Shipped</b></p>', unsafe_allow_html=True)
                         st.markdown('<p class="value-font">'+('{:,}'.format(shipped_orders))+'</p>', unsafe_allow_html=True)
@@ -333,12 +333,12 @@ for i in range(tab_len):
             
             """,
     ):
-                    col9,col10=st.columns([1,3],gap="small")
+                    col9,col10=st.columns([2,3.5],gap="small")
                     with col9 :
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
-                        st.image("assets/rto_icon.png", width=30)
+                        st.image("assets/rto_icon.png")
                     with col10:
                      st.markdown('<p class="value-font"><b>RTO</b></p>', unsafe_allow_html=True)
                      st.markdown('<p class="value-font">'+('{:,}'.format(RTO))+'</p>', unsafe_allow_html=True)
@@ -358,12 +358,12 @@ for i in range(tab_len):
             
             """,
     ):
-                    col9,col10=st.columns([1,3],gap="small")
+                    col9,col10=st.columns([2,3.5],gap="small")
                     with col9 :
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
-                        st.image("assets/in_transit_icon.png", width=30)
+                        st.image("assets/in_transit_icon.png")
                     with col10:
                      st.markdown('<p class="value-font"><b>In Transit</b></p>', unsafe_allow_html=True)
                      st.markdown('<p class="value-font">'+('{:,}'.format(in_transit))+'</p>', unsafe_allow_html=True)
@@ -384,12 +384,12 @@ for i in range(tab_len):
             
             """,
     ):
-                    col9,col10=st.columns([1,3],gap="small")
+                    col9,col10=st.columns([2,3.5],gap="small")
                     with col9 :
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
-                        st.image("assets/return_icon.png", width=30)
+                        st.image("assets/return_icon.png")
                     with col10:
                      st.markdown('<p class="value-font"><b>Returns</b></p>', unsafe_allow_html=True)
                      st.markdown('<p class="value-font">'+('{:,}'.format(total_returns))+'</p>', unsafe_allow_html=True)
@@ -409,12 +409,12 @@ for i in range(tab_len):
             
             """,
     ):
-                    col9,col10=st.columns([1,3],gap="small")
+                    col9,col10=st.columns([2,3.5],gap="small")
                     with col9 :
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
-                        st.image("assets/net_sales_icon.png", width=30)
+                        st.image("assets/net_Sales_icon.png")
                     with col10:
                      st.markdown('<p class="box-font"><b>Net Sales</b></p>', unsafe_allow_html=True)
                      st.markdown('<p class="value-font">'+('{:,}'.format(successful_order))+'</p>', unsafe_allow_html=True)
@@ -436,14 +436,14 @@ for i in range(tab_len):
             
             """,
     ):
-                    col9,col10=st.columns([1,3],gap="small")
+                    col9,col10=st.columns([2,3.5],gap="small")
                     with col9 :
 
                         # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                         
                         st.image("assets/sales_value_icon.png", width=30)
                     with col10:
-                     st.markdown('<p class="value-font"><b>Sales Value</b></p>', unsafe_allow_html=True)
+                     st.markdown('<p class="box-font"><b>Sales Value</b></p>', unsafe_allow_html=True)
                      st.markdown('<p class="value-font">'+('{:,}'.format(total_sales_value))+'</p>', unsafe_allow_html=True)
 
         with st.container(border=True) :
