@@ -14,6 +14,8 @@ import time
 import math
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
+from streamlit_extras.stylable_container import stylable_container
+from annotated_text import annotated_text
 
 
 make_sidebar()
@@ -35,33 +37,61 @@ db_sales_data['order_created_date']=pd.to_datetime(db_sales_data['order_created_
 count=0
 st.markdown("""
     <style>
-            .block-container {
-                padding-top: 0rem;
-                padding-bottom: 0rem;
-                padding-left: 1rem;
-                padding-right: 1rem;
-                    line-height: 30%;
-                text-align: center;
-                font-size : 15px;
-                gap: 0rem;
+             .reportview-container .main .block-container{{
+            padding-top: {padding_top}rem;
+        }}
 
+            div[class^='st-emotion-cache-10oheav'] {{ padding-top: {padding_top}rem; }}
+            
+            
+            .block-container {
+                padding-top: 1rem;
+                padding-bottom: 0rem;
+                padding-left: 0rem;
+                padding-right: 1rem;
+                margin-left: 1rem;
+                line-height: 0%;
+                text-align: center;
+                font-size : 12px;
+                gap: 0rem;
+                
             }
             .divder{
                 padding-top: 0rem;
                 padding-bottom: 0rem;
                 padding-left: 0rem;
                 padding-right: 0rem;
+                width: 50%;
         }
 
             .box-font {
+font-size:13px !important;
+
+}       
+           
+
+        .value-font {
 font-size:14px !important;
 
 }
+            .stTabs [data-baseweb="tab-list"] {
+		gap: 5px;
+    }
 
-        .value-font {
-font-size:15px !important;
+	.stTabs [data-baseweb="tab"] {
+		height: 40px;
+        white-space: pre-wrap;
+		background-color: #F0F2F6;
+		border-radius: 4px 4px 0px 0px;
+		gap: 1px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+        padding: 10px;
+    }
 
-}
+	.stTabs [aria-selected="true"] {
+  		background-color: #FFFFFF;
+	}
                 </style>
     """, unsafe_allow_html=True)
 with st.sidebar:
@@ -294,47 +324,185 @@ for i in range(tab_len):
             
             col1,col2,col3,col4,col5,col6=st.columns(6,gap='small')
             with col1:
-                with st.container(border=True):
-                    st.markdown('<p class="value-font"><b>Ordered Value</b></p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+('{:,}'.format(ordered_gmv))+'</p>', unsafe_allow_html=True)
+                with stylable_container(
+        key="order_1",
+        css_styles="""
+            {
+                border: 1px solid rgba(49, 51, 63, 0.2);
+                border-radius: 0.5rem;
+                padding: 5px;
+                margin : 0px;
+                
+            }
+            
+            """,
+    ):
+                    col9,col10=st.columns([2,3.5],gap="small")
+                    with col9 :
+
+                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                        
+                        st.image("assets/order_icon.png")
+                    with col10:
+            
+                            st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font"><b>Ordered Value</b></p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+('{:,}'.format(ordered_gmv))+'</p>', unsafe_allow_html=True)
 
             with col2:
-                with st.container(border=True):
-                    st.markdown('<p class="value-font"><b>Cancelled Value</b></p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+('{:,}'.format(cancelled_value))+'</p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+str(round(cancelled_value/ordered_gmv*100,2))+'%</p>', unsafe_allow_html=True)
+                with stylable_container(
+        key="order_1",
+        css_styles="""
+            {
+                border: 1px solid rgba(49, 51, 63, 0.2);
+                border-radius: 0.5rem;
+                padding: 2px;
+                margin : 0px;
+                
+            }
+            
+            """,
+    ):
+                    col9,col10=st.columns([2,3.5],gap="small")
+                    with col9 :
+
+                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                        
+                        st.image("assets/cancelled_icon.png")
+                    with col10:
+                        st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font"><b>Cancelled Value</b></p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font">'+('{:,}'.format(cancelled_value))+'</p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font">'+str(round(cancelled_value/ordered_gmv*100,2))+'%</p>', unsafe_allow_html=True)
                     
             with col3:
-                with st.container(border=True):
-                    st.markdown('<p class="value-font"><b>Shipped Value</b></p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+('{:,}'.format(shipped_value))+'</p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+str(round(shipped_value/ordered_gmv*100,2))+'%</p>', unsafe_allow_html=True)
+                with stylable_container(
+        key="order_1",
+        css_styles="""
+            {
+                border: 1px solid rgba(49, 51, 63, 0.2);
+                border-radius: 0.5rem;
+                padding: 2px;
+                margin : 0px;
+                
+            }
+            
+            """,
+    ):
+                    col9,col10=st.columns([2,3.5],gap="small")
+                    with col9 :
+
+                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                        
+                        st.image("assets/shipped_icon.png")
+                    with col10:
+                        st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
+                
+                        st.markdown('<p class="value-font"><b>Shipped Value</b></p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font">'+('{:,}'.format(shipped_value))+'</p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font">'+str(round(shipped_value/ordered_gmv*100,2))+'%</p>', unsafe_allow_html=True)
             
             with col4:
-                with st.container(border=True):
-                    st.markdown('<p class="value-font"><b>RTO Value</b></p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+('{:,}'.format(rto_value))+'</p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+str(round(rto_value/shipped_value*100,2))+'%</p>', unsafe_allow_html=True)
+                with stylable_container(
+        key="order_1",
+        css_styles="""
+            {
+                border: 1px solid rgba(49, 51, 63, 0.2);
+                border-radius: 0.5rem;
+                padding: 2px;
+                margin : 0px;
+                
+            }
+            
+            """,
+    ):
+                    col9,col10=st.columns([2,3.5],gap="small")
+                    with col9 :
+
+                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                        
+                        st.image("assets/rto_icon.png")
+                    with col10:
+                        st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
+                
+                        st.markdown('<p class="value-font"><b>RTO Value</b></p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font">'+('{:,}'.format(rto_value))+'</p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font">'+str(round(rto_value/shipped_value*100,2))+'%</p>', unsafe_allow_html=True)
 
             with col5:
-                with st.container(border=True):
-                    st.markdown('<p class="value-font"><b>In Transit Value</b></p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+('{:,}'.format(in_transit_value))+'</p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+str(round(in_transit_value/shipped_value*100,2))+'%</p>', unsafe_allow_html=True)
+                with stylable_container(
+        key="order_1",
+        css_styles="""
+            {
+                border: 1px solid rgba(49, 51, 63, 0.2);
+                border-radius: 0.5rem;
+                padding: 2px;
+                margin : 0px;
+                
+            }
+            
+            """,
+    ):
+                    col9,col10=st.columns([2,3.5],gap="small")
+                    with col9 :
+
+                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                        
+                        st.image("assets/in_transit_icon.png")
+                    with col10:
+                        st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
+                
+                        st.markdown('<p class="value-font"><b>In Transit Value</b></p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font">'+('{:,}'.format(in_transit_value))+'</p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font">'+str(round(in_transit_value/shipped_value*100,2))+'%</p>', unsafe_allow_html=True)
 
             
             with col6:
-                with st.container(border=True):
-                    st.markdown('<p class="value-font"><b>Delivered Value</b></p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+('{:,}'.format(delivered_value))+'</p>', unsafe_allow_html=True)
-                    st.markdown('<p class="value-font">'+str(round(delivered_value/shipped_value*100,2))+'%</p>', unsafe_allow_html=True)
+                with stylable_container(
+        key="order_1",
+        css_styles="""
+            {
+                border: 1px solid rgba(49, 51, 63, 0.2);
+                border-radius: 0.5rem;
+                padding: 2px;
+                margin : 0px;
+                
+            }
+            
+            """,
+    ):
+                    col9,col10=st.columns([2,3.5],gap="small")
+                    with col9 :
 
-        st.markdown("")
+                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                        
+                        st.image("assets/delivered_icon.png")
+                    with col10:
+                        st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
+                
+                        st.markdown('<p class="value-font"><b>Delivered Value</b></p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font">'+('{:,}'.format(delivered_value))+'</p>', unsafe_allow_html=True)
+                        st.markdown('<p class="value-font">'+str(round(delivered_value/shipped_value*100,2))+'%</p>', unsafe_allow_html=True)
+
+        
         st.markdown("")
 
         with st.container(border=True):
             
-            with st.container(border=True):
+            with stylable_container(
+        key="back_color_green",
+        css_styles="""
+            {
+                border: 1px solid rgba(49, 51, 63, 0.2);
+                border-radius: 0.5rem;
+                padding: 20px;
+                margin : 0px;
+                background-color: #77dd77;
+                
+            }
+            
+            """,
+    ):
                     st.markdown('<p class="value-font"><b>Delivered Value</b></p>', unsafe_allow_html=True)
                     st.markdown('<p class="value-font">'+('{:,}'.format(delivered_value))+'</p>', unsafe_allow_html=True)
                     
@@ -352,7 +520,8 @@ for i in range(tab_len):
                         st.markdown('<p class="value-font">'+str(round(settled_orders_value_returns/settled_orders_value*100,2))+'%</p>', unsafe_allow_html=True)  
                     
                     with st.container(border=True):
-                            st.markdown(returns_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                            st.dataframe(returns_dataframe.set_index(returns_dataframe.columns[0]),height=422)
+                            # st.markdown(returns_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                     
                 with subplcol2:
                     with st.container(border=True):
@@ -360,9 +529,25 @@ for i in range(tab_len):
                         st.markdown('<p class="value-font">'+('{:,}'.format(round(settled_orders_value_net_sales,2)))+'</p>', unsafe_allow_html=True)  
                         st.markdown('<p class="value-font">'+str(round(settled_orders_value_net_sales/settled_orders_value*100,2))+'%</p>', unsafe_allow_html=True)
                     with st.container(border=True):
-                            st.markdown(net_sales_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                            # st.markdown(f"<div style='background-color: green;text-align: center;'>{net_sales_dataframe.style.hide(axis="index").to_html()}</div>",
+                            #  unsafe_allow_html=True)
+                            # st.markdown(net_sales_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                            st.dataframe(net_sales_dataframe.set_index(net_sales_dataframe.columns[0]),height=422)
 
-                with st.container(border=True):
+                with   stylable_container(
+        key="back_color_green",
+        css_styles="""
+            {
+                border: 1px solid rgba(49, 51, 63, 0.2);
+                border-radius: 0.5rem;
+                padding: 20px;
+                margin : 0px;
+                background-color: #77dd77;
+                
+            }
+            
+            """,
+    ):
                         subplcol1,subplcol2,subplcol3=st.columns(3,gap='small')
                         with subplcol1:
                             st.markdown('<p class="value-font"><b>Settlement</b></p>', unsafe_allow_html=True)
@@ -390,7 +575,8 @@ for i in range(tab_len):
                         st.markdown('<p class="value-font">'+('{:,}'.format(round(settled_orders_value_returns/settled_orders_value*non_settled_orders_value,2)))+'</p>', unsafe_allow_html=True)
                         st.markdown('<p class="value-font">Actuals may vary</p>', unsafe_allow_html=True)
                     with st.container(border=True):
-                            st.markdown(estimated_returns_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                            st.dataframe(estimated_returns_dataframe.set_index(estimated_returns_dataframe.columns[0]),height=422)
+                            # st.markdown(estimated_returns_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                     
                 with subplcol2:
                     with st.container(border=True):
@@ -398,9 +584,23 @@ for i in range(tab_len):
                         st.markdown('<p class="value-font">'+('{:,}'.format(round(settled_orders_value_net_sales/settled_orders_value*non_settled_orders_value,2)))+'</p>', unsafe_allow_html=True)  
                         st.markdown('<p class="value-font">Actuals may vary</p>', unsafe_allow_html=True)
                     with st.container(border=True):
-                            st.markdown(estimated_net_sales_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                            st.dataframe(estimated_net_sales_dataframe.set_index(estimated_net_sales_dataframe.columns[0]),height=422)
+                            # st.markdown(estimated_net_sales_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 
-                with st.container(border=True):
+                with   stylable_container(
+        key="back_color_orange",
+        css_styles="""
+            {
+                border: 1px solid rgba(49, 51, 63, 0.2);
+                border-radius: 0.5rem;
+                padding: 20px;
+                margin : 0px;
+                background-color: #FFC067;
+                
+            }
+            
+            """,
+    ):
                         subplcol1,subplcol2=st.columns(2,gap='small')
                         with subplcol1:
                             st.markdown('<p class="value-font"><b>Estimated Settlement</b></p>', unsafe_allow_html=True)
@@ -443,7 +643,7 @@ for i in range(tab_len):
             db_data_monthly['P/L']=db_data_monthly['settlement']-db_data_monthly['cost']
             
             db_data_monthly.rename(columns={'final_amount':'Delivered_Value','customer_paid_amt':'Net_Sales_Value'},inplace=True)
-            fig = px.line()
+            fig = px.line(title="MOM P/L")
             #    update_traces  
             fig.add_scatter(x=db_data_monthly['month'], y=db_data_monthly['Delivered_Value'],name="Settled Sales Value")
             fig.add_scatter(x=db_data_monthly['month'], y=db_data_monthly['Net_Sales_Value'],name="Net Sales_Value")
