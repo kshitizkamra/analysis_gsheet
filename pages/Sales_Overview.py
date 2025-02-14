@@ -431,7 +431,7 @@ with stylable_container(
 
                             # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
                             
-                            st.image("assets/net_Sales_icon.png")
+                            st.image("assets/Net_Sales_icon.png")
                         with col10:
                             st.markdown('<p class="box-font"><b>Net Sales</b></p>', unsafe_allow_html=True)
                             st.markdown('<p class="value-font">'+('{:,}'.format(successful_order))+'</p>', unsafe_allow_html=True)
