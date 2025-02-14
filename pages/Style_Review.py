@@ -70,7 +70,7 @@ font-size:13px !important;
            
 
         .value-font {
-font-size:20px !important;
+font-size:18px !important;
 
 }
             .stTabs [data-baseweb="tab-list"] {
