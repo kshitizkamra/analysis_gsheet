@@ -207,74 +207,17 @@ except:
 
 st.title ("Sales Overview")
 db_data_final=db_data
+
 db_sales_data_final=db_sales_data
+
 total_channel=db_sales_data['channel_x'].unique().tolist()
 total_channel.insert(0, "All")
-tab=st.tabs(total_channel)
-tab_len=len(total_channel)
 
-for i in range(tab_len):
-    with tab[i]:
-        if i==0 :
-            db_data_so=db_data_final
-            db_sales_data_so=db_sales_data_final
-        else :
-            db_data_so=db_data_final[db_data_final['channel']==total_channel[i]]
-            db_sales_data_so=db_sales_data_final[db_sales_data_final['channel_x']==total_channel[i]]
-        
-        container=st.container(border=True)
-        container1=st.container(border=True)
-
-        db_data_forward=db_data_so[db_data_so['order_type']=='Forward']
-        db_data_reverse=db_data_so[db_data_so['order_type']=='Reverse']
-        total_orders=len(db_sales_data_so)
-        cancelled_orders=len(db_sales_data_so[db_sales_data_so['order_status']=='F'])
-        shipped_orders=total_orders-cancelled_orders
-        RTO=len(db_sales_data_so[db_sales_data_so['order_status']=='RTO'])
-        in_transit=len(db_sales_data_so[db_sales_data_so['order_status'].isin({'SH','L','PK','WP'})])
-        delivered=shipped_orders-RTO-in_transit
-        total_returns=len(db_sales_data_so[db_sales_data_so['returns']==1])
-        successful_order=delivered-total_returns
-        db_sales_value=db_sales_data_so[db_sales_data_so['returns']==0]
-        db_sales_value=db_sales_value[db_sales_value['order_status']=='C']
-        total_sales_value=sum(db_sales_value['final_amount'])
-        profit=sum(db_data_forward['customer_paid_amt'])
-
-
-        with st.container(border=True) :
-            
-            col1,col2,col3,col4,col5,col6,col7,col8=st.columns(8,gap='small')
-            with col1:
-                with stylable_container(
-        key="order_1",
+with stylable_container(
+        key="main",
         css_styles="""
             {
-                border: 1px solid rgba(49, 51, 63, 0.2);
-                border-radius: 0.5rem;
-                padding: 5px;
-                margin : 0px;
-                
-            }
-            
-            """,
-    ):
-                    col9,col10=st.columns([2,3.5],gap="small")
-                    with col9 :
-
-                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
-                        
-                        st.image("assets/order_icon.png")
-                    with col10:
-                        st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
-                        st.markdown('<p class="value-font"><b>Orders</b></p>', unsafe_allow_html=True)
-                        st.markdown('<p class="value-font">'+('{:,}'.format(total_orders))+'</p>', unsafe_allow_html=True)
-
-            with col2:
-                with stylable_container(
-        key="order_2",
-        css_styles="""
-            {
-                border: 1px solid rgba(49, 51, 63, 0.2);
+                border: 4px solid rgba(49, 51, 63, 0.2);
                 border-radius: 0.5rem;
                 padding: 10px;
                 margin : 0px;
@@ -283,264 +226,338 @@ for i in range(tab_len):
             
             """,
     ):
-                    col9,col10=st.columns([2,3.5],gap="small")
-                    with col9 :
 
-                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
-                        
-                        st.image("assets/cancelled_icon.png")
-                    with col10:
-                        st.markdown('<p class="value-font"><b>Cancelled</b></p>', unsafe_allow_html=True)
-                        st.markdown('<p class="value-font">'+('{:,}'.format(cancelled_orders))+'</p>', unsafe_allow_html=True)
-                        st.markdown('<p class="value-font">'+str(round(cancelled_orders/total_orders*100,2))+'%</p>', unsafe_allow_html=True)
+    tab=st.tabs(total_channel)
+    tab_len=len(total_channel)
+
+    for i in range(tab_len):
+        with tab[i]:
+            if i==0 :
+                db_data_so=db_data_final
+                db_sales_data_so=db_sales_data_final
+            else :
+                db_data_so=db_data_final[db_data_final['channel']==total_channel[i]]
+                db_sales_data_so=db_sales_data_final[db_sales_data_final['channel_x']==total_channel[i]]
+            
+            container=st.container(border=True)
+            container1=st.container(border=True)
+
+            db_data_forward=db_data_so[db_data_so['order_type']=='Forward']
+            db_data_reverse=db_data_so[db_data_so['order_type']=='Reverse']
+            total_orders=len(db_sales_data_so)
+            cancelled_orders=len(db_sales_data_so[db_sales_data_so['order_status']=='F'])
+            shipped_orders=total_orders-cancelled_orders
+            RTO=len(db_sales_data_so[db_sales_data_so['order_status']=='RTO'])
+            in_transit=len(db_sales_data_so[db_sales_data_so['order_status'].isin({'SH','L','PK','WP'})])
+            delivered=shipped_orders-RTO-in_transit
+            total_returns=len(db_sales_data_so[db_sales_data_so['returns']==1])
+            successful_order=delivered-total_returns
+            db_sales_value=db_sales_data_so[db_sales_data_so['returns']==0]
+            db_sales_value=db_sales_value[db_sales_value['order_status']=='C']
+            total_sales_value=sum(db_sales_value['final_amount'])
+            profit=sum(db_data_forward['customer_paid_amt'])
+
+
+            with st.container(border=True) :
+                
+                col1,col2,col3,col4,col5,col6,col7,col8=st.columns(8,gap='small')
+                with col1:
+                    with stylable_container(
+            key="order_1",
+            css_styles="""
+                {
+                    border: 1px solid rgba(49, 51, 63, 0.2);
+                    border-radius: 0.5rem;
+                    padding: 5px;
+                    margin : 0px;
                     
-            with col3:
-                with stylable_container(
-        key="order_2",
-        css_styles="""
-            {
-                border: 1px solid rgba(49, 51, 63, 0.2);
-                border-radius: 0.5rem;
-                padding: 10px;
-                margin : 0px;
+                }
                 
-            }
-            
-            """,
-    ):
-                    col9,col10=st.columns([2,3.5],gap="small")
-                    with col9 :
+                """,
+        ):
+                        col9,col10=st.columns([2,3.5],gap="small")
+                        with col9 :
 
-                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                            # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                            
+                            st.image("assets/order_icon.png")
+                        with col10:
+                            st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font"><b>Orders</b></p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+('{:,}'.format(total_orders))+'</p>', unsafe_allow_html=True)
+
+                with col2:
+                    with stylable_container(
+            key="order_2",
+            css_styles="""
+                {
+                    border: 1px solid rgba(49, 51, 63, 0.2);
+                    border-radius: 0.5rem;
+                    padding: 10px;
+                    margin : 0px;
+                    
+                }
+                
+                """,
+        ):
+                        col9,col10=st.columns([2,3.5],gap="small")
+                        with col9 :
+
+                            # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                            
+                            st.image("assets/cancelled_icon.png")
+                        with col10:
+                            st.markdown('<p class="value-font"><b>Cancelled</b></p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+('{:,}'.format(cancelled_orders))+'</p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+str(round(cancelled_orders/total_orders*100,2))+'%</p>', unsafe_allow_html=True)
                         
-                        st.image("assets/shipped_icon.png")
-                    with col10:
-                        st.markdown('<p class="value-font"><b>Shipped</b></p>', unsafe_allow_html=True)
-                        st.markdown('<p class="value-font">'+('{:,}'.format(shipped_orders))+'</p>', unsafe_allow_html=True)
-                        st.markdown('<p class="value-font">'+str(round(shipped_orders/total_orders*100,2))+'%</p>', unsafe_allow_html=True)
-            
-            with col4:
-                with stylable_container(
-        key="order_3",
-        css_styles="""
-            {
-                border: 1px solid rgba(49, 51, 63, 0.2);
-                border-radius: 0.5rem;
-                padding: 10px;
-                margin : 0px;
+                with col3:
+                    with stylable_container(
+            key="order_2",
+            css_styles="""
+                {
+                    border: 1px solid rgba(49, 51, 63, 0.2);
+                    border-radius: 0.5rem;
+                    padding: 10px;
+                    margin : 0px;
+                    
+                }
                 
-            }
-            
-            """,
-    ):
-                    col9,col10=st.columns([2,3.5],gap="small")
-                    with col9 :
+                """,
+        ):
+                        col9,col10=st.columns([2,3.5],gap="small")
+                        with col9 :
 
-                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
-                        
-                        st.image("assets/rto_icon.png")
-                    with col10:
-                     st.markdown('<p class="value-font"><b>RTO</b></p>', unsafe_allow_html=True)
-                     st.markdown('<p class="value-font">'+('{:,}'.format(RTO))+'</p>', unsafe_allow_html=True)
-                     st.markdown('<p class="value-font">'+str(round(RTO/shipped_orders*100,2))+'%</p>', unsafe_allow_html=True)
-
-            with col5:
-                with stylable_container(
-        key="order_4",
-        css_styles="""
-            {
-                border: 1px solid rgba(49, 51, 63, 0.2);
-                border-radius: 0.5rem;
-                padding: 10px;
-                margin : 0px;
+                            # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                            
+                            st.image("assets/shipped_icon.png")
+                        with col10:
+                            st.markdown('<p class="value-font"><b>Shipped</b></p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+('{:,}'.format(shipped_orders))+'</p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+str(round(shipped_orders/total_orders*100,2))+'%</p>', unsafe_allow_html=True)
                 
-            }
-            
-            """,
-    ):
-                    col9,col10=st.columns([2,3.5],gap="small")
-                    with col9 :
-
-                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
-                        
-                        st.image("assets/in_transit_icon.png")
-                    with col10:
-                     st.markdown('<p class="value-font"><b>In Transit</b></p>', unsafe_allow_html=True)
-                     st.markdown('<p class="value-font">'+('{:,}'.format(in_transit))+'</p>', unsafe_allow_html=True)
-                     st.markdown('<p class="value-font">'+str(round(in_transit/shipped_orders*100,2))+'%</p>', unsafe_allow_html=True)
-
-            
-            with col6:
-                with stylable_container(
-        key="order_5",
-        css_styles="""
-            {
-                border: 1px solid rgba(49, 51, 63, 0.2);
-                border-radius: 0.5rem;
-                padding: 10px;
-                margin : 0px;
+                with col4:
+                    with stylable_container(
+            key="order_3",
+            css_styles="""
+                {
+                    border: 1px solid rgba(49, 51, 63, 0.2);
+                    border-radius: 0.5rem;
+                    padding: 10px;
+                    margin : 0px;
+                    
+                }
                 
-            }
-            
-            """,
-    ):
-                    col9,col10=st.columns([2,3.5],gap="small")
-                    with col9 :
+                """,
+        ):
+                        col9,col10=st.columns([2,3.5],gap="small")
+                        with col9 :
 
-                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
-                        
-                        st.image("assets/return_icon.png")
-                    with col10:
-                     st.markdown('<p class="value-font"><b>Returns</b></p>', unsafe_allow_html=True)
-                     st.markdown('<p class="value-font">'+('{:,}'.format(total_returns))+'</p>', unsafe_allow_html=True)
-                     st.markdown('<p class="value-font">'+str(round(total_returns/shipped_orders*100,2))+'%</p>', unsafe_allow_html=True)
+                            # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                            
+                            st.image("assets/rto_icon.png")
+                        with col10:
+                            st.markdown('<p class="value-font"><b>RTO</b></p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+('{:,}'.format(RTO))+'</p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+str(round(RTO/shipped_orders*100,2))+'%</p>', unsafe_allow_html=True)
 
-            with col7:
-                with stylable_container(
-        key="order_6",
-        css_styles="""
-            {
-                border: 1px solid rgba(49, 51, 63, 0.2);
-                border-radius: 0.5rem;
-                padding: 10px;
-                margin : 0px;
+                with col5:
+                    with stylable_container(
+            key="order_4",
+            css_styles="""
+                {
+                    border: 1px solid rgba(49, 51, 63, 0.2);
+                    border-radius: 0.5rem;
+                    padding: 10px;
+                    margin : 0px;
+                    
+                }
                 
-            }
-            
-            """,
-    ):
-                    col9,col10=st.columns([2,3.5],gap="small")
-                    with col9 :
+                """,
+        ):
+                        col9,col10=st.columns([2,3.5],gap="small")
+                        with col9 :
 
-                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
-                        
-                        st.image("assets/net_sales_icon.png")
-                    with col10:
-                     st.markdown('<p class="box-font"><b>Net Sales</b></p>', unsafe_allow_html=True)
-                     st.markdown('<p class="value-font">'+('{:,}'.format(successful_order))+'</p>', unsafe_allow_html=True)
-                     st.markdown('<p class="value-font">'+str(round(successful_order/shipped_orders*100,2))+'%</p>', unsafe_allow_html=True)
-
-
-
-            with col8:
-                with stylable_container(
-        key="order_7",
-        css_styles="""
-            {
-                border: 1px solid rgba(49, 51, 63, 0.2);
-                border-radius: 0.5rem;
-                padding: 10px;
-                margin : 0px;
-                
-            }
-            
-            """,
-    ):
-                    col9,col10=st.columns([2,3.5],gap="small")
-                    with col9 :
-
-                        # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
-                        
-                        st.image("assets/sales_value_icon.png", width=30)
-                    with col10:
-                     st.markdown('<p class="box-font"><b>Sales Value</b></p>', unsafe_allow_html=True)
-                     st.markdown('<p class="value-font">'+('{:,}'.format(total_sales_value))+'</p>', unsafe_allow_html=True)
-
-        with st.container(border=True) :
-                st.subheader("Sales Trend (Shipped Orders)")
-                # db_sales_data_daily=db_sales_data[db_sales_data['order_status']!='F']
-                # db_sales_data_daily['order_created_date']=db_sales_data_daily['order_created_date'].dt.date
-                # db_sales_data_daily['order_created_date']=db_sales_data_daily['order_created_date'].astype(str)
-                # db_sales_data_daily['asp']=db_sales_data_daily['final_amount']
-                # db_sales_data_daily=db_sales_data_daily.groupby(['order_created_date']).agg({'final_amount':'sum','asp':'mean','order_release_id':'count'})
-                # db_sales_data_daily.reset_index(inplace=True)
-                # db_sales_data_daily.set_index('order_created_date',inplace=True)
-                # st.line_chart(data=db_sales_data_daily, x=None, y=['final_amount'], x_label='Date', y_label='Sales_Value', color=None, width=None, height=None, use_container_width=True)
-                # st.bar_chart(data=db_sales_data_daily, x=None, y=['asp'], x_label='Date', y_label='ASP', color=None, width=None, height=None, use_container_width=True)
-                
-                db_sales_data_daily=db_sales_data_so[db_sales_data_so['order_status']!='F']
-                db_sales_data_daily['order_created_date']=db_sales_data_daily['order_created_date'].dt.date
-                db_sales_data_daily['asp']=db_sales_data_daily['final_amount']
-                db_sales_data_daily=db_sales_data_daily.groupby(['order_created_date']).agg({'final_amount':'sum','asp':'mean','order_release_id':'count'})
-                db_sales_data_daily.reset_index(inplace=True)
-                db_sales_data_daily.set_index('order_created_date',inplace=True)
-                
-
-
-                fig, ax = plt.subplots(1, figsize=(15,5))
-                ax_2 = ax.twinx()
-                ax.set_xlabel('Date')
-                # ax.set_xticklabels('Date',rotation = 90)
-                ax.set_ylabel('Sales Value',color='darkturquoise')
-                ax_2.set_ylabel('ASP',color='red')
-                ax_2.plot(db_sales_data_daily.index, db_sales_data_daily['asp'],color='red')
-                ax_2.tick_params(axis='y', labelcolor='red')
-                ax.bar(db_sales_data_daily.index, db_sales_data_daily['final_amount'],color='darkturquoise')
-                ax.tick_params(axis='y', labelcolor='darkturquoise')
-                # fig.tight_layout()
-                st.pyplot(fig)
-
-
-        with st.container(border=True):
-            st.subheader("Contributions")
-            st.divider()
-            tab1,tab2,tab3,tab4,tab5=st.tabs(['👕 Category','🔠 Brand','⚧️ Gender','🗺️ State','📏 Size'])
-
-
-
-            with tab1 :
-            
-                # st.subheader("Category Contribution")
-                db_sales_category=db_sales_data_so[db_sales_data_so['order_status']!='F']
-                db_sales_category=db_sales_category.groupby(['article_type']).agg({'final_amount':'sum'})
-                db_sales_category.reset_index(inplace=True)
-
-                fig=px.pie(db_sales_category,values='final_amount',names='article_type',title=None)
-                # fig = go.Figure(data=[go.Pie(labels=db_sales_category['article_type'], values=db_sales_category['final_amount'])])
-                st.plotly_chart(fig,use_container_width=True,key=count)
-                count=count+1
-
-            with tab2 :
-            
-                # st.subheader("Brand Contribution")
-                db_sales_brand=db_sales_data_so[db_sales_data_so['order_status']!='F']
-                db_sales_brand=db_sales_brand.groupby(['brand']).agg({'final_amount':'sum'})
-                db_sales_brand.reset_index(inplace=True)
-
-                fig1=px.pie(db_sales_brand,values='final_amount',names='brand',title=None)
-                st.plotly_chart(fig1,use_container_width=True,key=count)
-                count=count+1
-
-
-            with tab3 :
-            
-                # st.subheader("Gender Contribution")
-                db_sales_brand=db_sales_data_so[db_sales_data_so['order_status']!='F']
-                db_sales_brand=db_sales_brand.groupby(['gender']).agg({'final_amount':'sum'})
-                db_sales_brand.reset_index(inplace=True)
-
-                fig2=px.pie(db_sales_brand,values='final_amount',names='gender',title=None)
-                st.plotly_chart(fig2,use_container_width=True,key=count)
-                count=count+1
-
+                            # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                            
+                            st.image("assets/in_transit_icon.png")
+                        with col10:
+                            st.markdown('<p class="value-font"><b>In Transit</b></p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+('{:,}'.format(in_transit))+'</p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+str(round(in_transit/shipped_orders*100,2))+'%</p>', unsafe_allow_html=True)
 
                 
-            with tab4 :
-                db_sales_latlong=db_sales_data_so[db_sales_data_so['order_status']!='F']
-                db_sales_latlong=db_sales_latlong.groupby(['state']).agg({'final_amount':'sum'})
-                db_sales_latlong.reset_index(inplace=True)
-                size=db_sales_latlong['final_amount'].max()
-                db_sales_latlong['amount']=db_sales_latlong['final_amount']/size*200000
-                db_sales_latlong=db_sales_latlong.merge(db_latlong,left_on='state',right_on='state')
-                st.map(db_sales_latlong, latitude='lat', longitude='lon',size='amount')
+                with col6:
+                    with stylable_container(
+            key="order_5",
+            css_styles="""
+                {
+                    border: 1px solid rgba(49, 51, 63, 0.2);
+                    border-radius: 0.5rem;
+                    padding: 10px;
+                    margin : 0px;
+                    
+                }
                 
-            with tab5 :
-            
-                # st.subheader("Size Contribution")
-                db_sales_brand=db_sales_data_so[db_sales_data_so['order_status']!='F']
-                db_sales_brand=db_sales_brand.groupby(['size']).agg({'final_amount':'sum'})
-                db_sales_brand.reset_index(inplace=True)
+                """,
+        ):
+                        col9,col10=st.columns([2,3.5],gap="small")
+                        with col9 :
 
-                fig3=px.pie(db_sales_brand,values='final_amount',names='size',title=None)
-                st.plotly_chart(fig3,use_container_width=True,key=count)
-                count=count+1
+                            # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                            
+                            st.image("assets/return_icon.png")
+                        with col10:
+                         st.markdown('<p class="value-font"><b>Returns</b></p>', unsafe_allow_html=True)
+                         st.markdown('<p class="value-font">'+('{:,}'.format(total_returns))+'</p>', unsafe_allow_html=True)
+                         st.markdown('<p class="value-font">'+str(round(total_returns/shipped_orders*100,2))+'%</p>', unsafe_allow_html=True)
+
+                with col7:
+                    with stylable_container(
+            key="order_6",
+            css_styles="""
+                {
+                    border: 1px solid rgba(49, 51, 63, 0.2);
+                    border-radius: 0.5rem;
+                    padding: 10px;
+                    margin : 0px;
+                    
+                }
+                
+                """,
+        ):
+                        col9,col10=st.columns([2,3.5],gap="small")
+                        with col9 :
+
+                            # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                            
+                            st.image("assets/net_Sales_icon.png")
+                        with col10:
+                            st.markdown('<p class="box-font"><b>Net Sales</b></p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+('{:,}'.format(successful_order))+'</p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+str(round(successful_order/shipped_orders*100,2))+'%</p>', unsafe_allow_html=True)
+
+
+
+                with col8:
+                    with stylable_container(
+            key="order_7",
+            css_styles="""
+                {
+                    border: 1px solid rgba(49, 51, 63, 0.2);
+                    border-radius: 0.5rem;
+                    padding: 10px;
+                    margin : 0px;
+                    
+                }
+                
+                """,
+        ):
+                        col9,col10=st.columns([2,3.5],gap="small")
+                        with col9 :
+
+                            # st.markdown('<p class="value-font"><b></b></p>', unsafe_allow_html=True)
+                            
+                            st.image("assets/sales_value_icon.png", width=30)
+                        with col10:
+                            st.markdown('<p class="box-font"><b>Sales Value</b></p>', unsafe_allow_html=True)
+                            st.markdown('<p class="value-font">'+('{:,}'.format(total_sales_value))+'</p>', unsafe_allow_html=True)
+
+            with st.container(border=True) :
+                    st.subheader("Sales Trend (Shipped Orders)")
+                    # db_sales_data_daily=db_sales_data[db_sales_data['order_status']!='F']
+                    # db_sales_data_daily['order_created_date']=db_sales_data_daily['order_created_date'].dt.date
+                    # db_sales_data_daily['order_created_date']=db_sales_data_daily['order_created_date'].astype(str)
+                    # db_sales_data_daily['asp']=db_sales_data_daily['final_amount']
+                    # db_sales_data_daily=db_sales_data_daily.groupby(['order_created_date']).agg({'final_amount':'sum','asp':'mean','order_release_id':'count'})
+                    # db_sales_data_daily.reset_index(inplace=True)
+                    # db_sales_data_daily.set_index('order_created_date',inplace=True)
+                    # st.line_chart(data=db_sales_data_daily, x=None, y=['final_amount'], x_label='Date', y_label='Sales_Value', color=None, width=None, height=None, use_container_width=True)
+                    # st.bar_chart(data=db_sales_data_daily, x=None, y=['asp'], x_label='Date', y_label='ASP', color=None, width=None, height=None, use_container_width=True)
+                    
+                    db_sales_data_daily=db_sales_data_so[db_sales_data_so['order_status']!='F']
+                    db_sales_data_daily['order_created_date']=db_sales_data_daily['order_created_date'].dt.date
+                    db_sales_data_daily['asp']=db_sales_data_daily['final_amount']
+                    db_sales_data_daily=db_sales_data_daily.groupby(['order_created_date']).agg({'final_amount':'sum','asp':'mean','order_release_id':'count'})
+                    db_sales_data_daily.reset_index(inplace=True)
+                    db_sales_data_daily.set_index('order_created_date',inplace=True)
+                    
+
+
+                    fig, ax = plt.subplots(1, figsize=(15,5))
+                    ax_2 = ax.twinx()
+                    ax.set_xlabel('Date')
+                    # ax.set_xticklabels('Date',rotation = 90)
+                    ax.set_ylabel('Sales Value',color='darkturquoise')
+                    ax_2.set_ylabel('ASP',color='red')
+                    ax_2.plot(db_sales_data_daily.index, db_sales_data_daily['asp'],color='red')
+                    ax_2.tick_params(axis='y', labelcolor='red')
+                    ax.bar(db_sales_data_daily.index, db_sales_data_daily['final_amount'],color='darkturquoise')
+                    ax.tick_params(axis='y', labelcolor='darkturquoise')
+                    # fig.tight_layout()
+                    st.pyplot(fig)
+
+
+            with st.container(border=True):
+                st.subheader("Contributions")
+                st.divider()
+                tab1,tab2,tab3,tab4,tab5=st.tabs(['👕 Category','🔠 Brand','⚧️ Gender','🗺️ State','📏 Size'])
+
+
+
+                with tab1 :
+                
+                    # st.subheader("Category Contribution")
+                    db_sales_category=db_sales_data_so[db_sales_data_so['order_status']!='F']
+                    db_sales_category=db_sales_category.groupby(['article_type']).agg({'final_amount':'sum'})
+                    db_sales_category.reset_index(inplace=True)
+
+                    fig=px.pie(db_sales_category,values='final_amount',names='article_type',title=None)
+                    # fig = go.Figure(data=[go.Pie(labels=db_sales_category['article_type'], values=db_sales_category['final_amount'])])
+                    st.plotly_chart(fig,use_container_width=True,key=count)
+                    count=count+1
+
+                with tab2 :
+                
+                    # st.subheader("Brand Contribution")
+                    db_sales_brand=db_sales_data_so[db_sales_data_so['order_status']!='F']
+                    db_sales_brand=db_sales_brand.groupby(['brand']).agg({'final_amount':'sum'})
+                    db_sales_brand.reset_index(inplace=True)
+
+                    fig1=px.pie(db_sales_brand,values='final_amount',names='brand',title=None)
+                    st.plotly_chart(fig1,use_container_width=True,key=count)
+                    count=count+1
+
+
+                with tab3 :
+                
+                    # st.subheader("Gender Contribution")
+                    db_sales_brand=db_sales_data_so[db_sales_data_so['order_status']!='F']
+                    db_sales_brand=db_sales_brand.groupby(['gender']).agg({'final_amount':'sum'})
+                    db_sales_brand.reset_index(inplace=True)
+
+                    fig2=px.pie(db_sales_brand,values='final_amount',names='gender',title=None)
+                    st.plotly_chart(fig2,use_container_width=True,key=count)
+                    count=count+1
+
+
+                    
+                with tab4 :
+                    db_sales_latlong=db_sales_data_so[db_sales_data_so['order_status']!='F']
+                    db_sales_latlong=db_sales_latlong.groupby(['state']).agg({'final_amount':'sum'})
+                    db_sales_latlong.reset_index(inplace=True)
+                    size=db_sales_latlong['final_amount'].max()
+                    db_sales_latlong['amount']=db_sales_latlong['final_amount']/size*200000
+                    db_sales_latlong=db_sales_latlong.merge(db_latlong,left_on='state',right_on='state')
+                    st.map(db_sales_latlong, latitude='lat', longitude='lon',size='amount')
+                    
+                with tab5 :
+                
+                    # st.subheader("Size Contribution")
+                    db_sales_brand=db_sales_data_so[db_sales_data_so['order_status']!='F']
+                    db_sales_brand=db_sales_brand.groupby(['size']).agg({'final_amount':'sum'})
+                    db_sales_brand.reset_index(inplace=True)
+
+                    fig3=px.pie(db_sales_brand,values='final_amount',names='size',title=None)
+                    st.plotly_chart(fig3,use_container_width=True,key=count)
+                    count=count+1
