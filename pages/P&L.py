@@ -340,7 +340,7 @@ with stylable_container(
                 col1,col2,col3,col4,col5,col6=st.columns(6,gap='small')
                 with col1:
                     with stylable_container(
-            key="order_1",
+            key="order_111",
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
