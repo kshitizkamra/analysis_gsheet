@@ -366,7 +366,7 @@ with stylable_container(
 
                 with col2:
                     with stylable_container(
-            key="order_1",
+            key="order_2",
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -392,7 +392,7 @@ with stylable_container(
                         
                 with col3:
                     with stylable_container(
-            key="order_1",
+            key="order_3",
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -419,7 +419,7 @@ with stylable_container(
                 
                 with col4:
                     with stylable_container(
-            key="order_1",
+            key="order_4",
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -446,7 +446,7 @@ with stylable_container(
 
                 with col5:
                     with stylable_container(
-            key="order_1",
+            key="order_5",
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -474,7 +474,7 @@ with stylable_container(
                 
                 with col6:
                     with stylable_container(
-            key="order_1",
+            key="order_6",
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -550,7 +550,7 @@ with stylable_container(
                                 st.dataframe(net_sales_dataframe.set_index(net_sales_dataframe.columns[0]),height=422)
 
                     with   stylable_container(
-            key="back_color_green",
+            key="back_color_green_1",
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
