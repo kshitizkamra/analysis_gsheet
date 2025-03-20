@@ -558,7 +558,7 @@ with stylable_container(
                             fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['cost'],name="COGS")
                             fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['p/l'],name="P/L")
                             # with st.container(height=355):
-                            st.plotly_chart(fig, theme="streamlit",key=count1)
+                            st.plotly_chart(fig, theme="streamlit",key=count)
                             count=count+1
 
                         with tab3:
