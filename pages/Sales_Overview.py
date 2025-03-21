@@ -231,6 +231,7 @@ with stylable_container(
     tab_len=len(total_channel)
     
     for i in range(tab_len):
+	count=count+1
         with tab[i]:
             if i==0 :
                 db_data_so=db_data_final
@@ -257,7 +258,7 @@ with stylable_container(
             total_sales_value=sum(db_sales_value['final_amount'])
             profit=sum(db_data_forward['customer_paid_amt'])
 
-	    count=count+1
+	    
             with st.container(border=True) :
                 
                 col1,col2,col3,col4,col5,col6,col7,col8=st.columns(8,gap='small')
