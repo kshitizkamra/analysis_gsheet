@@ -204,7 +204,7 @@ total_channel.insert(0, "All")
 
 
 with stylable_container(
-        key="main",
+        key=str(count+1),
         css_styles="""
             {
                 border: 4px solid rgba(49, 51, 63, 0.2);
@@ -340,7 +340,7 @@ with stylable_container(
                 col1,col2,col3,col4,col5,col6=st.columns(6,gap='small')
                 with col1:
                     with stylable_container(
-            key="order_111",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -366,7 +366,7 @@ with stylable_container(
 
                 with col2:
                     with stylable_container(
-            key="order_2",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -392,7 +392,7 @@ with stylable_container(
                         
                 with col3:
                     with stylable_container(
-            key="order_3",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -419,7 +419,7 @@ with stylable_container(
                 
                 with col4:
                     with stylable_container(
-            key="order_4",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -446,7 +446,7 @@ with stylable_container(
 
                 with col5:
                     with stylable_container(
-            key="order_5",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -474,7 +474,7 @@ with stylable_container(
                 
                 with col6:
                     with stylable_container(
-            key="order_6",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -505,7 +505,7 @@ with stylable_container(
             with st.container(border=True):
                 
                 with stylable_container(
-            key="back_color_green",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -550,7 +550,7 @@ with stylable_container(
                                 st.dataframe(net_sales_dataframe.set_index(net_sales_dataframe.columns[0]),height=422)
 
                     with   stylable_container(
-            key="back_color_green_1",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -603,7 +603,7 @@ with stylable_container(
                                 # st.markdown(estimated_net_sales_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 
                     with   stylable_container(
-            key="back_color_orange",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -665,7 +665,7 @@ with stylable_container(
                 fig.add_scatter(x=db_data_monthly['month'], y=db_data_monthly['settlement'],name="Settlement")
                 fig.add_scatter(x=db_data_monthly['month'], y=db_data_monthly['cost'],name="COGS")
                 fig.add_scatter(x=db_data_monthly['month'], y=db_data_monthly['P/L'],name="P/L")
-                st.plotly_chart(fig, theme="streamlit", key=count)
+                st.plotly_chart(fig, theme="streamlit", key=str(count+1))
                 count=count+1
 
             
