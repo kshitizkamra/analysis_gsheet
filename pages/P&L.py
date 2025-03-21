@@ -202,9 +202,9 @@ total_channel=db_sales_data['channel_x'].unique().tolist()
 
 total_channel.insert(0, "All")
 
-
+count=count+1
 with stylable_container(
-        key=str(count+1),
+        key=str(count),
         css_styles="""
             {
                 border: 4px solid rgba(49, 51, 63, 0.2);
@@ -339,8 +339,9 @@ with stylable_container(
                 
                 col1,col2,col3,col4,col5,col6=st.columns(6,gap='small')
                 with col1:
+                    count=count+1
                     with stylable_container(
-            key=str(count+1),
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -365,8 +366,9 @@ with stylable_container(
                                 st.markdown('<p class="value-font">'+('{:,}'.format(ordered_gmv))+'</p>', unsafe_allow_html=True)
 
                 with col2:
+                    count=count+1
                     with stylable_container(
-            key=str(count+1),
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -391,8 +393,9 @@ with stylable_container(
                             st.markdown('<p class="value-font">'+str(round(cancelled_value/ordered_gmv*100,2))+'%</p>', unsafe_allow_html=True)
                         
                 with col3:
+                    count=count+1
                     with stylable_container(
-            key=str(count+1),
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -418,8 +421,9 @@ with stylable_container(
                             st.markdown('<p class="value-font">'+str(round(shipped_value/ordered_gmv*100,2))+'%</p>', unsafe_allow_html=True)
                 
                 with col4:
+                    count=count+1
                     with stylable_container(
-            key=str(count+1),
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -445,8 +449,9 @@ with stylable_container(
                             st.markdown('<p class="value-font">'+str(round(rto_value/shipped_value*100,2))+'%</p>', unsafe_allow_html=True)
 
                 with col5:
+                    count=count+1
                     with stylable_container(
-            key=str(count+1),
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -473,8 +478,9 @@ with stylable_container(
 
                 
                 with col6:
+                    count=count+1
                     with stylable_container(
-            key=str(count+1),
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -503,9 +509,9 @@ with stylable_container(
             st.markdown("")
 
             with st.container(border=True):
-                
+                count=count+1
                 with stylable_container(
-            key=str(count+1),
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -548,9 +554,9 @@ with stylable_container(
                                 #  unsafe_allow_html=True)
                                 # st.markdown(net_sales_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                                 st.dataframe(net_sales_dataframe.set_index(net_sales_dataframe.columns[0]),height=422)
-
+                    count=count+1
                     with   stylable_container(
-            key=str(count+1),
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -602,8 +608,9 @@ with stylable_container(
                                 st.dataframe(estimated_net_sales_dataframe.set_index(estimated_net_sales_dataframe.columns[0]),height=422)
                                 # st.markdown(estimated_net_sales_dataframe.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 
+                    count=count+1
                     with   stylable_container(
-            key=str(count+1),
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -665,7 +672,8 @@ with stylable_container(
                 fig.add_scatter(x=db_data_monthly['month'], y=db_data_monthly['settlement'],name="Settlement")
                 fig.add_scatter(x=db_data_monthly['month'], y=db_data_monthly['cost'],name="COGS")
                 fig.add_scatter(x=db_data_monthly['month'], y=db_data_monthly['P/L'],name="P/L")
-                st.plotly_chart(fig, theme="streamlit", key=str(count+1))
                 count=count+1
+                st.plotly_chart(fig, theme="streamlit", key=str(count))
+                
 
             
