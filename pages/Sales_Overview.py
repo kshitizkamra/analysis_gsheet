@@ -264,7 +264,7 @@ with stylable_container(
                 with col1:
                     count=count+1
                     with stylable_container(
-            key=count,
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -290,7 +290,7 @@ with stylable_container(
                 with col2:
                     count=count+1
                     with stylable_container(
-            key=count,
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -316,7 +316,7 @@ with stylable_container(
                 with col3:
                     count=count+1
                     with stylable_container(
-            key=count,
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -342,7 +342,7 @@ with stylable_container(
                 with col4:
                     count=count+1
                     with stylable_container(
-            key=count,
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -368,7 +368,7 @@ with stylable_container(
                 with col5:
                     count=count+1
                     with stylable_container(
-            key=count,
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -395,7 +395,7 @@ with stylable_container(
                 with col6:
                     count=count+1
                     with stylable_container(
-            key=count,
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -421,7 +421,7 @@ with stylable_container(
                 with col7:
                     count=count+1
                     with stylable_container(
-            key=count,
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -449,7 +449,7 @@ with stylable_container(
                 with col8:
                     count=count+1
                     with stylable_container(
-            key=count,
+            key=str(count),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -523,7 +523,7 @@ with stylable_container(
                     fig=px.pie(db_sales_category,values='final_amount',names='article_type',title=None)
                     # fig = go.Figure(data=[go.Pie(labels=db_sales_category['article_type'], values=db_sales_category['final_amount'])])
                     count=count+1
-                    st.plotly_chart(fig,use_container_width=True,key=count)
+                    st.plotly_chart(fig,use_container_width=True,key=str(count))
                     
 
                 with tab2 :
@@ -535,7 +535,7 @@ with stylable_container(
 
                     fig1=px.pie(db_sales_brand,values='final_amount',names='brand',title=None)
                     count=count+1
-                    st.plotly_chart(fig1,use_container_width=True,key=count)
+                    st.plotly_chart(fig1,use_container_width=True,key=str(count))
                     
 
 
@@ -548,7 +548,7 @@ with stylable_container(
 
                     fig2=px.pie(db_sales_brand,values='final_amount',names='gender',title=None)
                     count=count+1
-                    st.plotly_chart(fig2,use_container_width=True,key=count)
+                    st.plotly_chart(fig2,use_container_width=True,key=str(count))
                     
 
 
@@ -569,8 +569,9 @@ with stylable_container(
                     db_sales_brand=db_sales_data_so[db_sales_data_so['order_status']!='F']
                     db_sales_brand=db_sales_brand.groupby(['size']).agg({'final_amount':'sum'})
                     db_sales_brand.reset_index(inplace=True)
-
+                    count0=0
+                    count0
                     fig3=px.pie(db_sales_brand,values='final_amount',names='size',title=None)
                     count=count+1
-                    st.plotly_chart(fig3,use_container_width=True,key=count)
+                    st.plotly_chart(fig3,use_container_width=True,key=str(count))
                     
