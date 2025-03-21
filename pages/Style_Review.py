@@ -216,7 +216,7 @@ search_style_code = st.multiselect(
 
 
 with stylable_container(
-        key="main",
+        key=str(count+1),
         css_styles="""
             {
                 border: 4px solid rgba(49, 51, 63, 0.2);
@@ -279,7 +279,7 @@ with stylable_container(
 
 
     with stylable_container(
-        key="main_1",
+        key=str(count+1),
         css_styles="""
             {
                 border: 1px solid rgba(49, 51, 63, 0.2);
@@ -365,7 +365,7 @@ with stylable_container(
                     with subcol1:
                         
                          with stylable_container(
-            key="order_1",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -391,7 +391,7 @@ with stylable_container(
                         
                     with subcol2:
                         with stylable_container(
-            key="order_2",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -417,7 +417,7 @@ with stylable_container(
 
                     with subcol3:
                         with stylable_container(
-            key="order_3",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -443,7 +443,7 @@ with stylable_container(
 
                     with subcol4:
                         with stylable_container(
-            key="order_4",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -469,7 +469,7 @@ with stylable_container(
 
                     with subcol5:
                         with stylable_container(
-            key="order_5",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -516,7 +516,7 @@ with stylable_container(
                         
                     with col4:
                       with stylable_container(
-            key="chart_data",
+            key=str(count+1),
             css_styles="""
                 {
                     border: 2px solid rgba(49, 51, 63, 0.2);
@@ -545,7 +545,7 @@ with stylable_container(
                             fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['return_count'],name="Returns")
                             fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['net_order_count'],name="Net Sales")
                             
-                            st.plotly_chart(fig, theme="streamlit",key=count)
+                            st.plotly_chart(fig, theme="streamlit",key=str(count+1))
                             count=count+1
 
                         with tab2:
@@ -558,7 +558,7 @@ with stylable_container(
                             fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['cost'],name="COGS")
                             fig.add_scatter(x=db_style_code_display_tab['month'], y=db_style_code_display_tab['p/l'],name="P/L")
                             # with st.container(height=355):
-                            st.plotly_chart(fig, theme="streamlit",key=count)
+                            st.plotly_chart(fig, theme="streamlit",key=str(count+1))
                             count=count+1
 
                         with tab3:
@@ -579,7 +579,7 @@ with stylable_container(
                             
                             fig=px.pie(db_style_code_display_tab,values='net_order_count',names='size',title=None,height=320)
                             # with st.container(height=355):
-                            st.plotly_chart(fig,use_container_width=True,key=count2)
+                            st.plotly_chart(fig,use_container_width=True,key=str(count+1))
                             count=count+1  
 
                         if i==0:
@@ -590,7 +590,7 @@ with stylable_container(
                             
                                 fig=px.pie(db_style_code_display_tab,values='net_order_count',names='channel',title=None,height=320)
                                 # with st.container(height=355):
-                                st.plotly_chart(fig,use_container_width=True,key=count3)
+                                st.plotly_chart(fig,use_container_width=True,key=str(count+1))
                                 count=count+1
 
                              
@@ -762,5 +762,5 @@ with stylable_container(
 
                             fig.update_layout(title = "Profit and loss statement")
 
-                            st.plotly_chart(fig,key=count4)
+                            st.plotly_chart(fig,key=str(count+1))
                             count=count+1
