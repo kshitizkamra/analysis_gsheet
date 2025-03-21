@@ -17,7 +17,7 @@ import plotly.graph_objects as go
 from streamlit_extras.stylable_container import stylable_container
 from annotated_text import annotated_text
 
-
+count=1
 make_sidebar()
 
 final_data_conn = st.connection("final_data", type=GSheetsConnection)
@@ -214,7 +214,7 @@ total_channel=db_sales_data['channel_x'].unique().tolist()
 total_channel.insert(0, "All")
 
 with stylable_container(
-        key="main",
+        key=count,
         css_styles="""
             {
                 border: 4px solid rgba(49, 51, 63, 0.2);
@@ -229,7 +229,7 @@ with stylable_container(
 
     tab=st.tabs(total_channel)
     tab_len=len(total_channel)
-
+    
     for i in range(tab_len):
         with tab[i]:
             if i==0 :
@@ -257,13 +257,15 @@ with stylable_container(
             total_sales_value=sum(db_sales_value['final_amount'])
             profit=sum(db_data_forward['customer_paid_amt'])
 
-
+	    count=count+1
             with st.container(border=True) :
                 
                 col1,col2,col3,col4,col5,col6,col7,col8=st.columns(8,gap='small')
+		    
                 with col1:
+		    count=count+1	
                     with stylable_container(
-            key="stylable_container_1",
+            key=count,
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -285,10 +287,11 @@ with stylable_container(
                             st.markdown('<p class="value-font"> </p>', unsafe_allow_html=True)
                             st.markdown('<p class="value-font"><b>Orders</b></p>', unsafe_allow_html=True)
                             st.markdown('<p class="value-font">'+('{:,}'.format(total_orders))+'</p>', unsafe_allow_html=True)
-
+		
                 with col2:
+		    count=count+1
                     with stylable_container(
-            key="order_2",
+            key=count,
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -312,8 +315,9 @@ with stylable_container(
                             st.markdown('<p class="value-font">'+str(round(cancelled_orders/total_orders*100,2))+'%</p>', unsafe_allow_html=True)
                         
                 with col3:
+		    count=count+1
                     with stylable_container(
-            key="order_21",
+            key=count,
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -337,8 +341,9 @@ with stylable_container(
                             st.markdown('<p class="value-font">'+str(round(shipped_orders/total_orders*100,2))+'%</p>', unsafe_allow_html=True)
                 
                 with col4:
+		    count=count+1
                     with stylable_container(
-            key="order_3",
+            key=count,
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -360,10 +365,11 @@ with stylable_container(
                             st.markdown('<p class="value-font"><b>RTO</b></p>', unsafe_allow_html=True)
                             st.markdown('<p class="value-font">'+('{:,}'.format(RTO))+'</p>', unsafe_allow_html=True)
                             st.markdown('<p class="value-font">'+str(round(RTO/shipped_orders*100,2))+'%</p>', unsafe_allow_html=True)
-
+		
                 with col5:
+		    count=count+1
                     with stylable_container(
-            key="order_4",
+            key=count,
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -388,8 +394,9 @@ with stylable_container(
 
                 
                 with col6:
+		    count=count+1
                     with stylable_container(
-            key="order_5",
+            key=count,
             css_styles="""
                 {
                     border: 1px solid rgba(49, 51, 63, 0.2);
@@ -413,6 +420,7 @@ with stylable_container(
                          st.markdown('<p class="value-font">'+str(round(total_returns/shipped_orders*100,2))+'%</p>', unsafe_allow_html=True)
 
                 with col7:
+		    count=count+1
                     with stylable_container(
             key="order_6",
             css_styles="""
@@ -440,6 +448,7 @@ with stylable_container(
 
 
                 with col8:
+		    count=count+1
                     with stylable_container(
             key="order_7",
             css_styles="""
@@ -514,8 +523,9 @@ with stylable_container(
 
                     fig=px.pie(db_sales_category,values='final_amount',names='article_type',title=None)
                     # fig = go.Figure(data=[go.Pie(labels=db_sales_category['article_type'], values=db_sales_category['final_amount'])])
-                    st.plotly_chart(fig,use_container_width=True,key=count)
                     count=count+1
+		    st.plotly_chart(fig,use_container_width=True,key=count)
+                    
 
                 with tab2 :
                 
@@ -525,8 +535,9 @@ with stylable_container(
                     db_sales_brand.reset_index(inplace=True)
 
                     fig1=px.pie(db_sales_brand,values='final_amount',names='brand',title=None)
-                    st.plotly_chart(fig1,use_container_width=True,key=count)
                     count=count+1
+		    st.plotly_chart(fig1,use_container_width=True,key=count)
+                    
 
 
                 with tab3 :
@@ -537,8 +548,9 @@ with stylable_container(
                     db_sales_brand.reset_index(inplace=True)
 
                     fig2=px.pie(db_sales_brand,values='final_amount',names='gender',title=None)
+		    count=count+1
                     st.plotly_chart(fig2,use_container_width=True,key=count)
-                    count=count+1
+                    
 
 
                     
@@ -559,5 +571,6 @@ with stylable_container(
                     db_sales_brand.reset_index(inplace=True)
 
                     fig3=px.pie(db_sales_brand,values='final_amount',names='size',title=None)
+		    count=count+1
                     st.plotly_chart(fig3,use_container_width=True,key=count)
-                    count=count+1
+                    
