@@ -191,7 +191,7 @@ except:
         db_data=db_data
         db_sales_data=db_sales_data  
               
-st.title ("💸 P&L Overview")
+st.title ("P&L Overview")
         
 db_data_final=db_data
 db_sales_data_final=db_sales_data
