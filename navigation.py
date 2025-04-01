@@ -23,7 +23,7 @@ def make_sidebar():
         
 
         if st.session_state.get("logged_in", False):
-            st.page_link("pages/Sales_Overview.py", label="Sales Overview", icon="💹")
+            st.page_link("pages/Sales_Overview.py", label="Sales Overview", icon="📊")
             st.page_link("pages/P&L.py", label="P&L", icon="💸")
             st.page_link("pages/Style_Review.py", label="StyleReview", icon="👕")
             
