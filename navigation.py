@@ -5,13 +5,10 @@ from streamlit.runtime.scriptrunner import get_pages
 from streamlit_extras.app_logo import add_logo
 
 def get_current_page_name():
-    ctx = get_script_run_ctx()
-    if ctx is None:
-        raise RuntimeError("Couldn't get script context")
-
-    pages = get_pages("")
-
-    return pages[ctx.page_script_hash]["page_name"]
+    query_params = st.query_params.to_dict()
+    if "page" in query_params:
+        return query_params["page"]
+    return "home"
 
 
 
