@@ -2,10 +2,9 @@ import streamlit as st
 from time import sleep
 from streamlit_extras.app_logo import add_logo
 
-def get_current_page_name():
-    # Streamlit doesn't provide a built-in way to get the current page name in recent versions.
-    # You might need to manually track this if required or rely on session state.
-    return st.session_state.get("current_page", "home")
+# Initialize session state if not set
+if "logged_in" not in st.session_state:
+    st.session_state["logged_in"] = False
 
 def make_sidebar():
     with st.sidebar:
@@ -15,26 +14,29 @@ def make_sidebar():
         st.divider()
 
         if st.session_state.get("logged_in", False):
-            st.markdown("### Navigation")
-            st.markdown("[💹 Sales Overview](./Sales_Overview)")
-            st.markdown("[💸 P&L](./P&L)")
-            st.markdown("[👕 Style Review](./Style_Review)")
-            st.markdown("[⏯️ Actions](./Actions)")
-            st.markdown("[📨 Data Export](./Data_Export)")
-            st.markdown("[📩 Data Import](./Data_Import)")
-            st.markdown("[♾️ Data Sync](./Data_Sync)")
+            # ✅ Sidebar Navigation with Icons
+            st.page_link("pages/Sales_Overview.py", label="Sales Overview", icon="💹")
+            st.page_link("pages/P&L.py", label="P&L", icon="💸")
+            st.page_link("pages/Style_Review.py", label="Style Review", icon="👕")
+            st.page_link("pages/Actions.py", label="Actions", icon="⏯️")
+            st.page_link("pages/Data_Export.py", label="Data Export", icon="📨")
+            st.page_link("pages/Data_Import.py", label="Data Import", icon="📩")
+            st.page_link("pages/Data_Sync.py", label="Data Sync", icon="♾️")
 
+            # Logout Button
             if st.button("Log out"):
                 logout()
-            st.divider()
-        elif get_current_page_name() != "home":
-            # If user is not logged in, redirect to home page
-            st.warning("Redirecting to login...")
-            sleep(1)
-            st.experimental_rerun()
+
+        else:
+            # 🚨 If the user is not logged in, prevent access to other pages
+            if "home.py" not in st.session_state.get("current_page", ""):
+                st.warning("Redirecting to login page...")
+                sleep(1)
+                st.switch_page("home.py")
 
 def logout():
+    """Logs the user out and redirects to the home page."""
     st.session_state["logged_in"] = False
     st.info("Logged out successfully!")
     sleep(0.5)
-    st.experimental_rerun()
+    st.switch_page("home.py")
