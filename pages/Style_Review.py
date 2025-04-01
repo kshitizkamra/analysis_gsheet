@@ -193,7 +193,7 @@ except:
 
 
 
-st.title ("Style Review")
+st.title ("👕 Style Review")
 db_data_sr=db_data
 db_sales_data_sr=db_sales_data
 
