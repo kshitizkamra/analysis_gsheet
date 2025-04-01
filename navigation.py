@@ -1,7 +1,7 @@
 import streamlit as st
 from time import sleep
 from streamlit.runtime.scriptrunner import get_script_run_ctx
-from streamlit.source_util import get_pages
+from streamlit.runtime.scriptrunner import get_pages
 from streamlit_extras.app_logo import add_logo
 
 def get_current_page_name():
