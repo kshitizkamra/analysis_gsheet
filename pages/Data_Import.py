@@ -18,7 +18,8 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from streamlit_gsheets import GSheetsConnection
 
-
+if not st.session_state.get("logged_in", False):
+    st.switch_page("home.py")
 make_sidebar()
 
 
