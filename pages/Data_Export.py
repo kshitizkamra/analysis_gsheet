@@ -15,7 +15,8 @@ import math
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
-
+if not st.session_state.get("logged_in", False):
+    st.switch_page("home.py")
 make_sidebar()
 
 final_data_conn = st.connection("final_data", type=GSheetsConnection)
