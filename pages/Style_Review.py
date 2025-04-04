@@ -17,7 +17,8 @@ import plotly.graph_objects as go
 from streamlit_extras.stylable_container import stylable_container
 from annotated_text import annotated_text
 
-
+if not st.session_state.get("logged_in", False):
+    st.switch_page("home.py")
 make_sidebar()
 
 
@@ -193,7 +194,7 @@ except:
 
 
 
-st.title ("Style Review")
+st.title ("👕 Style Review")
 db_data_sr=db_data
 db_sales_data_sr=db_sales_data
 
