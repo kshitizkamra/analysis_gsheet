@@ -28,7 +28,7 @@ def make_sidebar():
             st.page_link("pages/Sales_Overview.py", label="Sales Overview", icon="💹")
             st.page_link("pages/P&L.py", label="P&L", icon="💸")
             st.page_link("pages/Style_Review.py", label="StyleReview", icon="👕")
-            st.page_link("pages/Style_Review_copy.py", label="StyleReview copy", icon="👕")
+            
             st.page_link("pages/Actions.py", label="Actions", icon="⏯️")
             st.page_link("pages/Data_Export.py", label="Data Export", icon="📨")
             st.page_link("pages/Data_Import.py", label="Data Import", icon="📩")
