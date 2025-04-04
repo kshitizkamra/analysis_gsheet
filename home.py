@@ -3,6 +3,7 @@ from time import sleep
 from navigation import make_sidebar
 
 st.set_page_config(layout="wide")
+st.write("Please log in to continue ")
 make_sidebar()
 
 
