@@ -1,14 +1,17 @@
 import streamlit as st
 from time import sleep
 from streamlit.runtime.scriptrunner import get_script_run_ctx
-
+from streamlit.source_util import get_pages
 from streamlit_extras.app_logo import add_logo
 
 def get_current_page_name():
-    query_params = st.query_params.to_dict()
-    if "page" in query_params:
-        return query_params["page"]
-    return "home"
+    ctx = get_script_run_ctx()
+    if ctx is None:
+        raise RuntimeError("Couldn't get script context")
+
+    pages = get_pages("")
+
+    return pages[ctx.page_script_hash]["page_name"]
 
 
 
@@ -23,10 +26,10 @@ def make_sidebar():
         
 
         if st.session_state.get("logged_in", False):
-            st.page_link("pages/Sales_Overview.py", label="Sales Overview", icon="📊")
+            st.page_link("pages/Sales_Overview.py", label="Sales Overview", icon="💹")
             st.page_link("pages/P&L.py", label="P&L", icon="💸")
             st.page_link("pages/Style_Review.py", label="StyleReview", icon="👕")
-            
+            st.page_link("pages/Style_Review_copy.py", label="StyleReview copy", icon="👕")
             st.page_link("pages/Actions.py", label="Actions", icon="⏯️")
             st.page_link("pages/Data_Export.py", label="Data Export", icon="📨")
             st.page_link("pages/Data_Import.py", label="Data Import", icon="📩")
