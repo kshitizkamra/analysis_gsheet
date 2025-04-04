@@ -2,14 +2,18 @@ import streamlit as st
 from time import sleep
 from streamlit.runtime.scriptrunner import get_script_run_ctx
 from streamlit_extras.app_logo import add_logo
+import os
 
 def get_current_page_name():
     ctx = get_script_run_ctx()
     if ctx is None:
         raise RuntimeError("Couldn't get script context")
 
-    # Access page information from ctx.page_script_hash
-    page_name = ctx.page_script_hash.split(".")[0].split("/")[-1] # Extract the page name from the script hash
+    # Get the script's file path from the context
+    script_path = ctx.main_script_path # Corrected attribute
+
+    # Extract the filename (without extension) from the path
+    page_name = os.path.splitext(os.path.basename(script_path))[0]
 
     return page_name
 
