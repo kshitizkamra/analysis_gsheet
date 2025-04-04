@@ -17,7 +17,8 @@ import plotly.graph_objects as go
 from streamlit_extras.stylable_container import stylable_container
 from annotated_text import annotated_text
 
-
+if not st.session_state.get("logged_in", False):
+    st.switch_page("home.py")
 make_sidebar()
 
 final_data_conn = st.connection("final_data", type=GSheetsConnection)
@@ -191,7 +192,7 @@ except:
         db_data=db_data
         db_sales_data=db_sales_data  
               
-st.title ("P&L Overview")
+st.title ("💸 P&L Overview")
         
 db_data_final=db_data
 db_sales_data_final=db_sales_data
