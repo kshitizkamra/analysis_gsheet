@@ -20,7 +20,9 @@ from annotated_text import annotated_text
 if not st.session_state.get("logged_in", False):
     st.switch_page("home.py")
 make_sidebar()
+
 final_data_conn = st.connection("final_settlement", type=GSheetsConnection)
+
 final_sales_conn = st.connection("final_sales", type=GSheetsConnection)
 master_conn = st.connection("master", type=GSheetsConnection)
 
