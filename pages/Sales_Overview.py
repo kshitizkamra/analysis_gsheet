@@ -20,14 +20,13 @@ from annotated_text import annotated_text
 if not st.session_state.get("logged_in", False):
     st.switch_page("home.py")
 make_sidebar()
-
-final_data_conn = st.connection("final_data", type=GSheetsConnection)
+final_data_conn = st.connection("final_settlement", type=GSheetsConnection)
+final_sales_conn = st.connection("final_sales", type=GSheetsConnection)
 master_conn = st.connection("master", type=GSheetsConnection)
 
-
 db_data=final_data_conn.read(worksheet="final_data")
-db_sales_data=final_data_conn.read(worksheet="final_sales")
-db_sales_data_for_side_filter=final_data_conn.read(worksheet="final_sales")
+db_sales_data=final_sales_conn.read(worksheet="final_sales")
+db_sales_data_for_side_filter=final_sales_conn.read(worksheet="final_sales")
 db_latlong=master_conn.read(worksheet="latlong")
 count=0
 st.markdown("""
