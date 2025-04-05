@@ -137,7 +137,7 @@ with st.sidebar:
         channel_list,
         )
 
-        db_seller=final_data_conn.query("select distinct channel_x,seller_id from final_sales;")
+        db_seller=final_sales_conn.query("select distinct channel_x,seller_id from final_sales;")
         db_seller=db_seller[(db_seller['channel_x'].isin(channels))]
         db_seller=db_seller.drop(['channel_x'],axis=1)
         db_seller=db_seller.drop_duplicates()
@@ -148,7 +148,7 @@ with st.sidebar:
         seller_list,
         )
 
-        db_gender=final_data_conn.query("select distinct gender,seller_id from final_sales;")
+        db_gender=final_sales_conn.query("select distinct gender,seller_id from final_sales;")
         db_gender=db_gender[(db_gender['seller_id'].isin(seller))]
         db_gender=db_gender.drop(['seller_id'],axis=1)
         db_gender=db_gender.drop_duplicates()
@@ -159,7 +159,7 @@ with st.sidebar:
         gender_list,
         )
 
-        db_brands=final_data_conn.query("select distinct brand,gender,seller_id from final_sales;")
+        db_brands=final_sales_conn.query("select distinct brand,gender,seller_id from final_sales;")
         db_brands=db_brands[(db_brands['seller_id'].isin(seller))]
         db_brands=db_brands.drop(['seller_id'],axis=1)
         db_brands=db_brands.drop_duplicates()
