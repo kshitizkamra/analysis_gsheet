@@ -23,7 +23,8 @@ upload_conn = st.connection("upload", type=GSheetsConnection)
 
 master_conn = st.connection("master", type=GSheetsConnection)
 
-final_data_conn = st.connection("final_data", type=GSheetsConnection)
+final_data_conn = st.connection("final_settlement", type=GSheetsConnection)
+final_sales_conn = st.connection("final_sales", type=GSheetsConnection)
 
 
 
@@ -188,7 +189,7 @@ with st.container(border=True) :
 
 
         final_data_conn.update(worksheet="final_data",data=db_data)
-        final_data_conn.update(worksheet="final_sales",data=db_sales_final)
+        final_sales_conn.update(worksheet="final_sales",data=db_sales_final)
         
         final_bar.progress(3/4,text="Final Magic")
 
